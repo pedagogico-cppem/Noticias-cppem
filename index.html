@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CPPEM Notícias</title>
+<style>
+:root{
+  --cor-principal:#0a3d0a;
+  --cor-secundaria:#00cc00;
+  --cor-destaque:#00FF01;
+  --cor-fundo:#f6f5f1;
+  --cor-texto:#1c2530;
+  --cor-texto-suave:#5a6472;
+  --cor-card:#ffffff;
+  --cor-borda:#e2e1da;
+  --cppem:#00FF01;
+  --cppem-hover:#00cc00;
+  --fonte:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --raio:6px;
+  --sombra:0 4px 16px rgba(0,0,0,0.07);
+  --sombra-forte:0 10px 30px rgba(0,0,0,0.13);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--fonte);background:var(--cor-fundo);color:var(--cor-texto);line-height:1.65;-webkit-font-smoothing:antialiased;}
+a{color:inherit;text-decoration:none;}
+ul{list-style:none;}
+img,svg{display:block;max-width:100%;}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+
+/* PAGE SYSTEM */
+.page{display:none;}
+.page.ativa{display:block;}
+
+/* TOPBAR */
+.topbar{background:var(--cor-principal);color:#cdd8e8;font-size:0.78rem;}
+.topbar .wrap{display:flex;justify-content:space-between;align-items:center;padding:7px 24px;}
+.topbar .dourado{color:var(--cor-destaque);font-weight:600;}
+
+/* HEADER */
+header.site-header{background:#fff;border-bottom:1px solid var(--cor-borda);position:sticky;top:0;z-index:50;box-shadow:0 1px 0 rgba(0,0,0,0.02);}
+.header-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;gap:16px;}
+.logo{display:flex;align-items:center;gap:10px;flex-shrink:0;cursor:pointer;}
+.logo-mark{width:42px;height:42px;border-radius:50%;background:#000;display:flex;align-items:center;justify-content:center;overflow:hidden;border:2px solid var(--cor-destaque);flex-shrink:0;}
+.logo-mark img{width:100%;height:100%;object-fit:cover;}
+.logo-texto{font-weight:700;font-size:1.25rem;color:var(--cor-principal);}
+nav.menu{display:flex;gap:24px;}
+nav.menu a{font-size:0.92rem;font-weight:600;color:var(--cor-texto);padding:6px 0;position:relative;cursor:pointer;transition:color .2s;}
+nav.menu a::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:0;background:var(--cor-destaque);transition:width .25s;}
+nav.menu a:hover,nav.menu a.ativo{color:var(--cor-principal);}
+nav.menu a:hover::after,nav.menu a.ativo::after{width:100%;}
+.btn-cta{background:var(--cor-principal);color:#fff;padding:10px 18px;border-radius:var(--raio);font-weight:700;font-size:0.88rem;border:1.5px solid var(--cor-principal);cursor:pointer;transition:transform .18s,box-shadow .18s,background .18s;white-space:nowrap;}
+.btn-cta:hover{background:var(--cor-secundaria);transform:translateY(-1px);box-shadow:var(--sombra);}
+.btn-dicas{background:var(--cor-destaque);color:var(--cor-principal);border-color:var(--cor-destaque);font-weight:800;}
+.btn-dicas:hover{background:var(--cppem-hover);border-color:var(--cppem-hover);color:#fff;}
+.menu-toggle{display:none;flex-direction:column;gap:4px;background:none;border:none;cursor:pointer;padding:6px;}
+.menu-toggle span{width:24px;height:2px;background:var(--cor-principal);}
+
+/* ====== PAGE: INÍCIO ====== */
+.inicio-hero{background:linear-gradient(160deg,#041604,#0a3d0a);padding:60px 0 52px;text-align:center;}
+.inicio-hero h1{font-size:clamp(1.8rem,4vw,2.8rem);color:#fff;font-weight:800;margin-bottom:14px;line-height:1.15;}
+.inicio-hero p{color:#9acf9a;font-size:1.08rem;max-width:560px;margin:0 auto;}
+.inicio-tag{display:inline-block;background:rgba(0,255,1,0.15);color:var(--cor-destaque);font-size:0.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:5px 12px;border-radius:999px;margin-bottom:16px;}
+
+.noticias-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:24px;padding:48px 0 64px;}
+.noticia-card{background:var(--cor-card);border:1px solid var(--cor-borda);border-radius:10px;overflow:hidden;box-shadow:var(--sombra);cursor:pointer;transition:transform .2s,box-shadow .2s;}
+.noticia-card:hover{transform:translateY(-5px);box-shadow:var(--sombra-forte);}
+.card-visual{height:160px;background:linear-gradient(120deg,#041604,#0a3d0a);position:relative;overflow:hidden;display:flex;align-items:flex-end;padding:18px 20px;}
+.card-visual svg{position:absolute;inset:0;width:100%;height:100%;opacity:.45;}
+.card-categoria{position:relative;z-index:2;display:inline-block;background:rgba(0,255,1,0.18);color:var(--cor-destaque);font-size:0.68rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:999px;}
+.card-corpo{padding:22px 22px 24px;}
+.card-corpo h3{font-size:1.08rem;font-weight:700;color:var(--cor-principal);margin-bottom:10px;line-height:1.35;}
+.card-corpo p{font-size:0.88rem;color:var(--cor-texto-suave);margin-bottom:16px;line-height:1.6;}
+.card-meta{display:flex;align-items:center;justify-content:space-between;font-size:0.8rem;color:var(--cor-texto-suave);}
+.card-ler{font-weight:700;color:var(--cor-principal);display:flex;align-items:center;gap:4px;font-size:0.85rem;}
+.card-ler span{color:var(--cor-destaque);}
+
+/* ====== PAGE: MATÉRIA COMUM ====== */
+.hero-materia{background:linear-gradient(180deg,#fff 0%,var(--cor-fundo) 100%);padding:48px 0 36px;border-bottom:1px solid var(--cor-borda);}
+.breadcrumb{font-size:0.8rem;color:var(--cor-texto-suave);margin-bottom:16px;cursor:pointer;}
+.breadcrumb span{color:var(--cor-principal);font-weight:600;}
+.breadcrumb span:hover{text-decoration:underline;}
+.categoria-tag{display:inline-block;background:rgba(0,255,1,0.14);color:#0a7a0a;font-size:0.74rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px;border-radius:999px;margin-bottom:18px;}
+h1.titulo-materia{font-size:clamp(1.8rem,3.8vw,2.9rem);line-height:1.15;color:var(--cor-principal);max-width:900px;margin-bottom:16px;font-weight:800;}
+p.subtitulo{font-size:clamp(1rem,1.5vw,1.22rem);color:var(--cor-texto-suave);max-width:720px;margin-bottom:22px;}
+.meta-materia{display:flex;flex-wrap:wrap;gap:16px;font-size:0.85rem;color:var(--cor-texto-suave);border-top:1px solid var(--cor-borda);padding-top:16px;}
+.meta-materia strong{color:var(--cor-texto);}
+
+/* DESTAQUE VISUAL */
+.destaque-visual{margin:32px 0 0;border-radius:12px;overflow:hidden;position:relative;background:linear-gradient(120deg,var(--cor-principal) 0%,var(--cor-secundaria) 55%,#062606 100%);min-height:220px;display:flex;align-items:center;box-shadow:var(--sombra-forte);}
+.destaque-visual svg{position:absolute;inset:0;width:100%;height:100%;opacity:.5;}
+.destaque-conteudo{position:relative;z-index:2;padding:36px 40px;color:#fff;max-width:540px;}
+.destaque-conteudo .selo{width:48px;height:48px;border:2px solid var(--cor-destaque);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:14px;}
+.destaque-conteudo span.linha{display:block;width:40px;height:3px;background:var(--cor-destaque);margin-bottom:14px;}
+.destaque-conteudo p{font-size:1.3rem;line-height:1.35;font-weight:600;}
+
+/* LAYOUT MATÉRIA */
+.layout-principal{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:44px;padding:44px 0 20px;align-items:start;}
+article.corpo-materia p{font-size:1.06rem;color:var(--cor-texto);margin-bottom:18px;line-height:1.7;}
+article.corpo-materia p.lead{font-size:1.15rem;font-weight:500;}
+h2.secao-titulo{font-size:1.38rem;color:var(--cor-principal);margin:34px 0 12px;padding-left:12px;border-left:4px solid var(--cor-destaque);font-weight:700;}
+
+/* SIDEBAR */
+aside.sidebar{display:flex;flex-direction:column;gap:18px;position:sticky;top:90px;}
+.sidebar-bloco{background:var(--cor-card);border:1px solid var(--cor-borda);border-radius:var(--raio);padding:20px;box-shadow:var(--sombra);}
+.sidebar-bloco h3{font-size:1rem;color:var(--cor-principal);margin-bottom:12px;display:flex;align-items:center;gap:8px;font-weight:700;}
+.sidebar-bloco h3::before{content:"";width:8px;height:8px;background:var(--cor-destaque);border-radius:2px;flex-shrink:0;}
+.sidebar-bloco ul li{font-size:0.9rem;color:var(--cor-texto);padding:7px 0;border-bottom:1px dashed var(--cor-borda);}
+.sidebar-bloco ul li:last-child{border-bottom:none;}
+.sidebar-bloco.relacionadas a{display:block;font-size:0.88rem;font-weight:600;color:var(--cor-principal);padding:8px 0;border-bottom:1px solid var(--cor-borda);transition:color .2s;cursor:pointer;}
+.sidebar-bloco.relacionadas a:last-child{border-bottom:none;}
+.sidebar-bloco.relacionadas a:hover{color:var(--cor-destaque);}
+
+/* BLOCO DESTAQUE CARGO */
+.bloco-destaque-cargo{background:linear-gradient(135deg,#041604,#0a3d0a);border:1px solid var(--cor-destaque);border-radius:var(--raio);padding:24px 22px;margin:16px 0 24px;color:#fff;box-shadow:var(--sombra-forte);}
+.cargo-badge{display:inline-block;background:var(--cor-destaque);color:#041604;font-size:0.7rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:999px;margin-bottom:10px;}
+.cargo-conteudo p{font-size:0.95rem;color:#d4f5d4;margin-bottom:14px;}
+.cargo-conteudo p strong{color:#fff;}
+.cargo-numeros{display:flex;gap:14px;flex-wrap:wrap;margin:14px 0;}
+.cargo-num-item{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:var(--raio);padding:12px 14px;text-align:center;min-width:100px;}
+.cargo-num-item.destaque-num{border-color:rgba(0,255,1,0.4);background:rgba(0,255,1,0.08);}
+.cargo-num-item.alerta-num{border-color:rgba(255,100,100,0.4);background:rgba(255,100,100,0.08);}
+.cargo-num{display:block;font-size:1.7rem;font-weight:800;color:#fff;line-height:1;margin-bottom:4px;}
+.cargo-num-item.destaque-num .cargo-num{color:var(--cor-destaque);}
+.cargo-num-item.alerta-num .cargo-num{color:#ff8080;}
+.cargo-num-label{font-size:0.73rem;color:#9acf9a;line-height:1.3;}
+
+/* TABELA CORPORAÇÕES */
+.tabela-corporacoes{display:flex;flex-direction:column;gap:10px;margin:14px 0 8px;}
+.corp-item{background:var(--cor-card);border:1px solid var(--cor-borda);border-left:4px solid var(--cor-destaque);border-radius:var(--raio);padding:16px 18px;box-shadow:var(--sombra);}
+.corp-item.corp-incerto{border-left-color:#e8b84b;}
+.corp-header{display:flex;align-items:center;gap:10px;margin-bottom:7px;}
+.corp-sigla{background:var(--cor-principal);color:var(--cor-destaque);font-weight:800;font-size:0.75rem;letter-spacing:.04em;padding:4px 9px;border-radius:4px;white-space:nowrap;}
+.corp-item.corp-incerto .corp-sigla{background:#6b5010;color:#f0cf6e;}
+.corp-nome{font-weight:700;font-size:0.97rem;color:var(--cor-principal);}
+.corp-item p{font-size:0.9rem;color:var(--cor-texto);margin:0;}
+
+/* CARDS DE FATORES */
+section.cards-fatores{padding:6px 0 52px;}
+.secao-label{font-size:0.76rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--cor-texto-suave);margin-bottom:6px;}
+h2.secao-grande{font-size:1.8rem;color:var(--cor-principal);margin-bottom:26px;font-weight:800;}
+.grid-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:18px;}
+.card-fator{background:var(--cor-card);border:1px solid var(--cor-borda);border-radius:var(--raio);padding:22px 18px;box-shadow:var(--sombra);transition:transform .2s,box-shadow .2s;opacity:0;transform:translateY(14px);}
+.card-fator.visivel{opacity:1;transform:translateY(0);}
+.card-fator:hover{transform:translateY(-4px);box-shadow:var(--sombra-forte);}
+.card-fator .num{font-size:1.5rem;color:var(--cor-destaque);margin-bottom:8px;font-weight:900;}
+.card-fator h4{font-size:0.98rem;color:var(--cor-principal);margin-bottom:6px;font-weight:700;}
+.card-fator p{font-size:0.87rem;color:var(--cor-texto-suave);}
+
+/* TIMELINE */
+section.timeline{background:var(--cor-principal);padding:56px 0;color:#fff;}
+section.timeline .secao-label{color:var(--cor-destaque);}
+section.timeline h2.secao-grande{color:#fff;}
+.timeline-lista{position:relative;margin-top:30px;}
+.timeline-lista::before{content:"";position:absolute;left:19px;top:6px;bottom:6px;width:2px;background:rgba(255,255,255,0.15);}
+.timeline-item{display:flex;gap:20px;padding-bottom:30px;position:relative;opacity:0;transform:translateX(-10px);transition:opacity .5s,transform .5s;}
+.timeline-item.visivel{opacity:1;transform:translateX(0);}
+.timeline-item:last-child{padding-bottom:0;}
+.timeline-marca{width:40px;height:40px;border-radius:50%;background:var(--cor-secundaria);border:2px solid var(--cor-destaque);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.88rem;color:var(--cor-destaque);flex-shrink:0;}
+.timeline-texto h4{font-size:1.04rem;margin-bottom:3px;color:#fff;}
+.timeline-texto p{font-size:0.88rem;color:#cdd8e8;max-width:540px;}
+
+/* CAIXA ANÁLISE */
+section.analise{padding:52px 0;}
+.caixa-analise{background:linear-gradient(135deg,#eafdea,#ddfadd);border:1px solid #9ef09e;border-left:5px solid var(--cor-destaque);border-radius:var(--raio);padding:32px 36px;box-shadow:var(--sombra);max-width:860px;margin:0 auto;}
+.caixa-analise .selo-analise{display:inline-flex;align-items:center;gap:8px;font-size:1.1rem;color:var(--cor-principal);margin-bottom:12px;font-weight:700;}
+.caixa-analise .selo-analise::before{content:"";width:10px;height:10px;background:var(--cor-destaque);border-radius:50%;}
+.caixa-analise p{font-size:1.05rem;color:#3b3322;line-height:1.7;font-style:italic;}
+
+/* CTA FINAL */
+section.cta-final{background:linear-gradient(120deg,var(--cor-principal),#062606);color:#fff;padding:64px 0;text-align:center;}
+section.cta-final h2{font-size:clamp(1.5rem,3vw,2.2rem);margin-bottom:14px;font-weight:800;}
+section.cta-final p{max-width:600px;margin:0 auto 28px;color:#cdd8e8;font-size:1.02rem;}
+.cta-botoes{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+.btn-dourado{background:var(--cor-destaque);border-color:var(--cor-destaque);color:var(--cor-principal);}
+.btn-dourado:hover{background:var(--cppem-hover);border-color:var(--cppem-hover);color:#fff;}
+.btn-borda-branco{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,0.6);border-radius:var(--raio);padding:10px 18px;font-weight:700;font-size:0.88rem;cursor:pointer;transition:border-color .2s,background .2s;}
+.btn-borda-branco:hover{border-color:#fff;background:rgba(255,255,255,0.08);}
+
+/* RODAPÉ */
+footer.site-footer{background:#041604;color:#9fb0c6;padding:44px 0 22px;font-size:0.87rem;}
+.footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:28px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,0.07);margin-bottom:18px;}
+.footer-grid h5{color:#fff;font-size:1.05rem;margin-bottom:9px;}
+.footer-grid p{color:#7e91ab;}
+.footer-grid ul li{padding:4px 0;}
+.footer-grid ul a:hover{color:var(--cor-destaque);}
+.footer-aviso{text-align:center;color:#5f7088;font-size:0.76rem;}
+
+/* PPRN */
+.pprn-alerta{display:flex;align-items:center;gap:14px;background:linear-gradient(90deg,#041604,#0a3d0a);border-radius:var(--raio);padding:14px 20px;margin-bottom:22px;flex-wrap:wrap;}
+.pprn-contagem{font-size:1.55rem;font-weight:900;color:var(--cor-destaque);white-space:nowrap;line-height:1;}
+.pprn-alerta-texto{font-size:0.93rem;color:#d4f5d4;}
+.pprn-alerta-texto strong{color:#fff;}
+h3.pprn-subtitulo{font-size:1.12rem;font-weight:700;color:var(--cor-principal);margin:26px 0 14px;padding-left:10px;border-left:3px solid var(--cor-destaque);}
+.pprn-pontos-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px;}
+.pprn-ponto{background:var(--cor-fundo);border:1px solid var(--cor-borda);border-radius:var(--raio);padding:12px 8px;text-align:center;}
+.pprn-ponto.destaque-ponto{background:linear-gradient(135deg,#041604,#0a3d0a);border-color:var(--cor-destaque);}
+.pprn-ponto-num{display:block;font-size:1.7rem;font-weight:900;line-height:1;margin-bottom:2px;}
+.pprn-ponto.destaque-ponto .pprn-ponto-num{color:var(--cor-destaque);}
+.pprn-ponto:not(.destaque-ponto) .pprn-ponto-num{color:var(--cor-principal);}
+.pprn-ponto-label{display:block;font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-bottom:3px;}
+.pprn-ponto.destaque-ponto .pprn-ponto-label{color:#9acf9a;}
+.pprn-ponto:not(.destaque-ponto) .pprn-ponto-label{color:var(--cor-texto-suave);}
+.pprn-ponto-disc{display:block;font-size:0.7rem;line-height:1.3;}
+.pprn-ponto.destaque-ponto .pprn-ponto-disc{color:#c5e8c5;}
+.pprn-ponto:not(.destaque-ponto) .pprn-ponto-disc{color:var(--cor-texto-suave);}
+p.pprn-obs{font-size:0.86rem;color:var(--cor-texto-suave);background:var(--cor-fundo);border:1px solid var(--cor-borda);padding:10px 14px;border-radius:var(--raio);margin-bottom:24px;}
+p.pprn-obs strong{color:var(--cor-texto);}
+.pprn-dicas-lista{display:flex;flex-direction:column;gap:12px;}
+.pprn-dica-item{padding:14px 16px;background:var(--cor-fundo);border:1px solid var(--cor-borda);border-left:3px solid var(--cor-destaque);border-radius:0 var(--raio) var(--raio) 0;}
+.pprn-dica-item strong{display:block;font-size:0.95rem;color:var(--cor-principal);margin-bottom:4px;}
+.pprn-dica-item p{font-size:0.87rem;color:var(--cor-texto-suave);margin:0;}
+
+/* PLANO DE COMBATE CARD (sidebar) */
+.plano-card{background:linear-gradient(160deg,#041604,#0a3d0a);border:2px solid var(--cor-destaque);border-radius:10px;padding:22px 20px;box-shadow:0 0 28px rgba(0,255,1,0.12),var(--sombra-forte);color:#fff;}
+.plano-badge{display:inline-block;background:var(--cor-destaque);color:#041604;font-weight:900;font-size:0.7rem;letter-spacing:.07em;text-transform:uppercase;padding:4px 12px;border-radius:999px;margin-bottom:12px;}
+.plano-card h3{font-size:1.15rem;font-weight:800;color:#fff;margin-bottom:8px;line-height:1.25;}
+.plano-card p.desc{font-size:0.87rem;color:#c0dcc0;margin-bottom:14px;line-height:1.6;}
+.plano-card ul{padding:0;display:flex;flex-direction:column;gap:7px;margin-bottom:16px;}
+.plano-card ul li{font-size:0.84rem;color:#d4f5d4;display:flex;gap:8px;line-height:1.4;}
+.plano-check{color:var(--cor-destaque);font-weight:900;flex-shrink:0;}
+.plano-cta-box{border-top:1px solid rgba(0,255,1,0.2);padding-top:14px;display:flex;flex-direction:column;gap:7px;}
+.plano-btn1{background:var(--cor-destaque);color:#041604;border:none;padding:11px;border-radius:var(--raio);font-weight:800;font-size:0.88rem;cursor:pointer;transition:background .2s;width:100%;}
+.plano-btn1:hover{background:var(--cppem-hover);color:#fff;}
+.plano-btn2{background:transparent;color:#9acf9a;border:1.5px solid rgba(0,255,1,0.3);padding:10px;border-radius:var(--raio);font-size:0.85rem;cursor:pointer;transition:border-color .2s,color .2s;width:100%;}
+.plano-btn2:hover{border-color:var(--cor-destaque);color:var(--cor-destaque);}
+
+/* DASHBOARD DICAS */
+#dashboardOverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;backdrop-filter:blur(2px);}
+#dashboardOverlay.aberto{display:block;}
+#dashboardPanel{position:fixed;top:0;right:-100%;width:min(680px,96vw);height:100vh;background:#fff;z-index:201;overflow-y:auto;transition:right .35s cubic-bezier(.4,0,.2,1);box-shadow:-6px 0 40px rgba(0,0,0,0.16);}
+#dashboardPanel.aberto{right:0;}
+.dash-header{background:linear-gradient(120deg,#041604,#0a3d0a);padding:24px 26px 20px;position:sticky;top:0;z-index:10;display:flex;justify-content:space-between;align-items:flex-start;}
+.dash-header-texto h2{color:#fff;font-size:1.3rem;font-weight:800;margin-bottom:3px;}
+.dash-header-texto p{color:#9acf9a;font-size:0.86rem;}
+.dash-close{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:50%;width:34px;height:34px;color:#fff;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s;}
+.dash-close:hover{background:rgba(255,255,255,0.22);}
+.dash-tabs{display:flex;border-bottom:2px solid var(--cor-borda);background:#fff;position:sticky;top:91px;z-index:9;}
+.dash-tab{flex:1;padding:12px 8px;font-size:0.85rem;font-weight:700;color:var(--cor-texto-suave);background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;transition:color .2s,border-color .2s;margin-bottom:-2px;}
+.dash-tab.ativo{color:var(--cor-principal);border-bottom-color:var(--cor-destaque);}
+.dash-conteudo{padding:22px 26px 36px;}
+.dash-pane{display:none;}
+.dash-pane.ativo{display:block;}
+.dash-dica-item{border-left:3px solid var(--cor-destaque);padding:13px 15px;margin-bottom:12px;background:var(--cor-fundo);border-radius:0 var(--raio) var(--raio) 0;}
+.dash-dica-item strong{display:block;font-size:0.94rem;color:var(--cor-principal);margin-bottom:4px;}
+.dash-dica-item p{font-size:0.86rem;color:var(--cor-texto-suave);margin:0;line-height:1.6;}
+.dash-dica-num{display:inline-block;background:var(--cor-principal);color:var(--cor-destaque);font-size:0.7rem;font-weight:800;padding:2px 8px;border-radius:4px;margin-bottom:7px;}
+.dash-subtitulo{font-size:0.97rem;font-weight:700;color:var(--cor-principal);margin:18px 0 10px;padding-left:10px;border-left:3px solid var(--cor-destaque);}
+.dash-alerta{display:flex;align-items:center;gap:14px;background:linear-gradient(90deg,#041604,#0a3d0a);border-radius:var(--raio);padding:13px 16px;margin-bottom:18px;flex-wrap:wrap;}
+.dash-contagem{font-size:1.45rem;font-weight:900;color:var(--cor-destaque);}
+.dash-alerta-txt{font-size:0.88rem;color:#d4f5d4;}
+.dash-alerta-txt strong{color:#fff;}
+.dash-pontos-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:14px 0;}
+.dash-ponto{background:var(--cor-fundo);border:1px solid var(--cor-borda);border-radius:var(--raio);padding:10px 7px;text-align:center;}
+.dash-ponto.dp-verde{background:linear-gradient(135deg,#041604,#0a3d0a);border-color:var(--cor-destaque);}
+.dash-ponto-num{display:block;font-size:1.5rem;font-weight:900;line-height:1;margin-bottom:2px;}
+.dash-ponto.dp-verde .dash-ponto-num{color:var(--cor-destaque);}
+.dash-ponto:not(.dp-verde) .dash-ponto-num{color:var(--cor-principal);}
+.dash-ponto-label{display:block;font-size:0.63rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-bottom:2px;}
+.dash-ponto.dp-verde .dash-ponto-label{color:#9acf9a;}
+.dash-ponto:not(.dp-verde) .dash-ponto-label{color:var(--cor-texto-suave);}
+.dash-ponto-disc{display:block;font-size:0.68rem;line-height:1.3;}
+.dash-ponto.dp-verde .dash-ponto-disc{color:#c5e8c5;}
+.dash-ponto:not(.dp-verde) .dash-ponto-disc{color:var(--cor-texto-suave);}
+.dash-obs{font-size:0.84rem;color:var(--cor-texto-suave);background:var(--cor-fundo);border:1px solid var(--cor-borda);padding:10px 13px;border-radius:var(--raio);margin-bottom:16px;}
+.dash-plano{background:linear-gradient(160deg,#041604,#0a3d0a);border:2px solid var(--cor-destaque);border-radius:10px;padding:20px 18px;margin-top:16px;box-shadow:0 0 22px rgba(0,255,1,0.1);}
+.dash-plano-badge{display:inline-block;background:var(--cor-destaque);color:#041604;font-weight:900;font-size:0.7rem;letter-spacing:.06em;text-transform:uppercase;padding:4px 11px;border-radius:999px;margin-bottom:11px;}
+.dash-plano h3{font-size:1.12rem;font-weight:800;color:#fff;margin-bottom:7px;}
+.dash-plano p.desc{font-size:0.86rem;color:#c0dcc0;margin-bottom:12px;line-height:1.6;}
+.dash-plano ul{list-style:none;padding:0;display:flex;flex-direction:column;gap:7px;margin-bottom:15px;}
+.dash-plano ul li{font-size:0.84rem;color:#d4f5d4;display:flex;gap:7px;}
+.dash-plano ul li span{color:var(--cor-destaque);font-weight:900;flex-shrink:0;}
+.dash-plano-btns{display:flex;flex-direction:column;gap:7px;border-top:1px solid rgba(0,255,1,0.2);padding-top:14px;}
+.dash-plano-btn1{background:var(--cor-destaque);color:#041604;border:none;padding:11px;border-radius:var(--raio);font-weight:800;font-size:0.88rem;cursor:pointer;transition:background .2s;}
+.dash-plano-btn1:hover{background:var(--cppem-hover);color:#fff;}
+.dash-plano-btn2{background:transparent;color:#9acf9a;border:1.5px solid rgba(0,255,1,0.3);padding:10px;border-radius:var(--raio);font-size:0.85rem;cursor:pointer;transition:border-color .2s,color .2s;}
+.dash-plano-btn2:hover{border-color:var(--cor-destaque);color:var(--cor-destaque);}
+
+/* FADE-UP */
+.fade-up{opacity:0;transform:translateY(16px);transition:opacity .6s,transform .6s;}
+.fade-up.visivel{opacity:1;transform:translateY(0);}
+
+/* RESPONSIVO */
+@media(max-width:980px){
+  .layout-principal{grid-template-columns:1fr;}
+  aside.sidebar{position:static;}
+  .footer-grid{grid-template-columns:1fr;gap:20px;}
+  .pprn-pontos-grid,.dash-pontos-grid{grid-template-columns:repeat(2,1fr);}
+}
+@media(max-width:760px){
+  nav.menu{position:absolute;top:100%;left:0;right:0;background:#fff;flex-direction:column;gap:0;border-bottom:1px solid var(--cor-borda);max-height:0;overflow:hidden;transition:max-height .3s;}
+  nav.menu.aberto{max-height:300px;}
+  nav.menu a{padding:13px 24px;border-bottom:1px solid var(--cor-borda);}
+  nav.menu a::after{display:none;}
+  .menu-toggle{display:flex;}
+  .header-inner .btn-cta.hide-mobile{display:none;}
+  .noticias-grid{grid-template-columns:1fr;}
+  .grid-cards{grid-template-columns:repeat(2,1fr);}
+  .dash-pontos-grid{grid-template-columns:repeat(2,1fr);}
+}
+@media(max-width:500px){
+  .grid-cards{grid-template-columns:1fr;}
+  .cargo-numeros{flex-direction:column;}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;}}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="wrap">
+    <span>Portal CPPEM | <span class="dourado">Informação estratégica</span> para quem estuda para concursos</span>
+    <span id="data-topo"></span>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="wrap header-inner">
+    <div class="logo" onclick="irPara('inicio')">
+      <div class="logo-mark"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJQAAACUCAIAAAD6XpeDAAAQAElEQVR4Aey6B6BlSVUu/FXVjiffnDp3TzMzzJCRIPpM4K+i5CdKUgxIUJLviYpPSaKgog8EARVUhKdgIig+RZEgoCBxYk9P5745nLxTVf3fPvveM3e6b890z/QA86D6O+usWrUqra+qdu1zW+JKJQ47OCixT2APxBzkLCExKTAuxLjAiEADqAlUgYpUFV+WPRW6wlfCk3CFdAoo6ewAtZXkIInLnbCVhg0P+pHD7DnK1nDO/RZK7gjpK4KTlYEjSq6oeISs+qrhqRFHjrpq3FETrppUcsqR0wqzwC5gN7Bf4GAeW3WlJ6928QDgwQLfIvBIKb5d4TsFvhv4HoHHAo8X4skST5V4msSzgJ8Q4jkOXgy8VOBlAi8HXgn8OvA64LeBNwFvhXgHxJ9B4vbJChCbNiFypZC59o34sdaeP+0djZtuDBfDRgmIQUKRBCNLTdCaf4k8USEEPwWEyEtFnjZpMDZXDGAhAGFzhZxtKnS0UqBAXk7DIIttSQgU2Gb7xlGHVFEh7mTiUuaxopRSbEtAHkMaWExQIehBe6EoiIISYEASacshkEuA/OmBNLDZpiI3aZN506xO5FyyvhAAc7nEMA2Mw9y9UWH0d8Qdz6WoUvhQL5SdJUMkN9k5x4GhJOTAKu2AISDPkp6BsRAsyhUtsEkS+UNOHvkjMlgWkcgMklQJIcgSBCAFE2taISiF2JRCbCo0fqOBVBG3zXpwit7OcltZrgmRxyrXtn1yf2O5sUgMdXoUOmWeZZHh8WjzTcb2rRXMGnImhLaENCBy/jSghdTCZsLqAV2W3bA9KcCNO5ADs6D5NgzGJMTtjbcV32s0BmtH3OkEWAs2D9WmvECF3G1QRIUwg0SFtSiZI0PkhgpBhRywVasNAWOgB465YpBTmO+53IdUDUAHkNEMIgOXAsjZFqhjcy9SFZsJ38iJoeX0C0mlwDnZwjiULB3ADhPJsDzuLPmgjbRR4U4yA3rIDcsJy1PR0C3nD9x5OmdOGBSAybMwgv6UMIMtBm4nwQ9ASeDcJEReKkQuzy37RsiTieE0t+tD43alcKDcAtlCroM3Rn7nu40mm9tIAEEjQYbowCwlSeWzkOEu6GTzYuBPt5x1brk8K7jzBvzmZrZOf9ZyDJQVIPho5AowLBWsZXOLzZcIT11u0IJsKvRhB18TyK0ktlIxjK3cxX4Xtc6XEoIQTCwzfBqBgSCstnzwCAYvk9wKRH6gZUJZpbQjjBTGkUZKKxXB12EjhRV00ylssgmTgrcSmYIQmUCCHBFELMkfndmm0YJuOhUmESZVIrW2r23foD8Y2Na2RE4GdkjFyIvS7foOrttM3yBqvous3WGypijJi0Quctbz7TVwZQ2CKouoWG4LM3CiyHeVxdYhyYUijBB0gETeJLjDYATtXFUGQuSQyFkEqA8MAtsTTVtZIW4rEiLXhcjlVvk3xDfDyHkWkgqxqfOLVFiSQBvEIEvB0xKMPhh0sggU5XzCWTICluY1uI9pt8wCBrmPtWSOYrALLTci7bmek8edl3dBxwLYqgcmsZWob0KITQUQg4Rv4ERKhrMvdEqCbFCSNip0oEKQANIAI4TJzcICDPlA0gJDUomBMXewPE7BgzR/JRDIMKBNCA2R64IXTlqkEJaAsGQDpEZYPgdzCGbYdQ6xlZjZUjdLz8nS4RsKJKkAZ02FkqdZAWa5n4Y6tKBOi7UAaTMYcAZoZkmusDw2DfUBaKR/ztPAgVkjSJvVkv5UKJFx5wk2lnc6qMTaQx3nE0NLUUxJnaDyjQlyQwznXuiUBcgTQX3AlqXO7WZ5y893iiRtpJDIY2+R06ZNwWjOCkkwAjlzNs/mCpkTNsuZy89MckndCO48AbbB9jgQsiH4xdqUtyE3Dz408XsoqRCFhco3JsgQyMPW5KUFCctzg53EElryrBW52+AWA4iCKpZuKmSLUbcosgNP+hAAK5J13vEJLUgUL7q5W5Y/QsHo59jspMhaWnARqXAr5EW4/7/mkjM3nFNOBcNOBiiHVuq8dNCRW0zActsN9KK8IAzItwzrERgkcsnWrAAV+nAdsGKeBZgla3kp+Bsqa9BASZsBt6U1TJlItUwMUoNEm9ToxJjU2sSiQGZB8FedjGOh/6BVtnM+BqO51wrOjuBmIqSxhNKWoEJaxCCgQkvBdzvtwDhGw+QRV9ZKwmiljcy4Y9jKABiEGYw3wQzfCzNHJFKkQqZSpVJGQkaD6GYGRKIRGxkZERsVZ1ZL0DOmj5Hsfbhv2Om9Nshf7YGTCHZZSCq3YUAJeb3NUmiWr2K5NqgiBN0GYJZggRhEf1OnM3eBRr7PLJ0tG+TqsVaAT0dtjLZWcxUAtEAK1s8h82ZzOsXAsikx2Nj4eklfJ+OwDP/mUIqgM8R53gzslIWDzQNMh5wegzy+zNClgGYly6Mrt2kLI+hGHYbEAEagoJBuVDIg/1HG8jpjM8ufbwYkgRRuKuw+741fQ+aoEywnqHwT2yPASFvysGUq9MJAOcjSJafBWkGNfOQAttFDwmDyQpYTA8J4txT5i50WvGfmlxQNk+XskjlBJeNPnIDltiNIjBCWhFGXgmlrOMi3HUvxzXRbBPIQWwuisDFPnWCWcgvCYhPkZgCQs3xTMu6gzk3HA5BskT8it2i2aoXmbUXlTzhtWUr++Atn/re9TAij6Cm1zFmyAMFOC5LskCchkCMv4SdXBb+/idtHoOBpaDM5W8wVnJFTkCrmAUYcRnB/wUoqMBhA5Fzx3DSmYHHTSE8jYAT54z7ji7kgqSmzyHVuOy0kHYQYcCLF5pNPCEsdt0uFy+1M3+CZYr2TuWEctnR+C2MpWSILN/JHqpgH+KoO6oZHKDOEBTkgdK6zWg5tRe6zyTcdLBscOOT3T15BqWd28wqU77BB0zl/AyqFGHwVxu16YfmmPCcCBVfWioKtQel2PTfkpVvFvG0URxwpsJtGbpqBWy5AJgx5tYN1kG9BkE4+/zS4RU1mmKQSVvDWosC/RAlB8g3XBniVyR+LJn8mijwBLJPWKP5Zis1CCErqVgpKIaW1YkfgXpLEBZMSQgFc5TmGcwRDybufFoLHF5EJRaRCwJXWlXCV9WBdMDraEYQETzQhGGYIbYS2MoWMWd1I6hkkW+NmSpRMlUodmyXQmcwIrRLt8CUvsSq2MoLqCxUr1VcS30z3TATy08/aYdvM5iuAp19ulMIi/2ZxbhH8JriJKDHYkXLgQJ/bwOUyaC9vKq9lv0leHq7L+Mkjy/OLId9qtLCQLfAY5FFmRXES0rLpRTsvJpZHl4XhCWktjz8LMZADS840s4JuGjDgmWntvYc8Hjg7YitEl+v7MrTDsA5bKXTKnA9uHUOK8kdMwR+YJVs5o5bEgNzkrgP+NAkjzXQmW7RQEcaA7VCCCg/bYTffVC5jBHIKBh+2yW9KcpPvrAF/5MwO9h+NpEGYrQ1HK7kcZK1RfHMg8pc8w1eLgkLBLGFy8vLnMFu+F2DHbUfj19vQSRUxHFWh55IfIwr+BA+8/KHFHEHmeEJay1IjYC2ffCQR2gotaYRW0DAaln9Vz7kHLGjhy8M3n3nDOF9mxVpLJoaNkgZeS3LJAnLAbWMsH3vcfDTQN3fmm4ARzPK2AhbmuzM321yhXYDssi4fe+TPsIlh899ULl8ESMBtjVlb6Dlz1Li1aDE0yi23wRayJHfAx4A/sJzFNFrSyGq5D1VqeREptJD881B+oorcQs+8DMibwQWSyTe81dry3CUsO8k9rScJOCKHAkcIGIKHcwE2ToC/3RTIK+3wkYNf7HgeDlE46b1a+7qmJ8d1xYHWDW3Htfa8sKI8Y6aNnDB1Y0bUxP7KtYeYNw825iEVdd8xs0eZA0Zd4djaiDF7jDSeVJM2HDGugTK+Y5U3bjxTrdUyP8i0cbQJVCMLp7KqzEKOZ2dASMLyspEfetwrwlgCVgvkO4hKvmu4Swaw/AMf/94nBTeP4IujVWDo+f4HvhdKDM5G/npiE4jUikSITIr8DwjMIv+jampEYmRqwddBNkiZcgBFbC5eigGzQyk208U3cMeeXG3nOBQdeMemq71RibQTVOL6LLK9I4sHr+5Peq1atLt89plh8w166r3x7N8teP9yWp5Rtf9QpY/1S5/sTx8Jx74M8X8TfHjV+8jy3HMORQfSBdFdR3mvt+9gv1pLo6WxSPb7G6KXCtRVgCRZCzrzTmuCb9vnjGYrW4xqKGkudLUZnjxXGCEGJma40AmQU8vcEJZ8MsOZb+65vILIXfjbR+5srcjvOAbGmHyTGSAHn5ysdkkQecoHJASl2EqX1Aadd17OUrLoHBQ9HLbrFbkWTa/IYG1kLZ5strPq0bMPPzHym7OjfziN3zLRi1qdJ3fOPqy7Mtoz4OK0fZs2g7jpmDjwxShKc07jUHnyp6KxD94Hf7fPPHXthHfkqL/arKGmcJVbhYe0BBmltQQQwKhdkS1cIBWj2kFCKShASigCdksxFsYKC2HyU4mywCY5pI2wVgykNZAAnWEELaxoOSFtkNnB3/OQ778s98ElpfOHy+o0Ul5esM0CbJbKVyrx/Ai6KdpZX4z3+t/TbL4VG58St774zNojjqLU5ay6GjoZH2/umjsxGTWNYBhd00eng7hUqdVnRk1Vf+mqzlr5Jnzbce89E2P/NDHzWFRi0Vqa67XXcsbDShd+Fc5U3/NFmPrsfGdwSAVYXCib0tIAlZOfR18Kkef5sXkBd9d20Gy0hQG31IAkwdJ8GMYII/lTJCkE+dOgx8COXPLMHCAvZRNfbxAin7MYJCkZASHsIX91rLrqBlPQL2103zCBp5RclEdd4a1i9DQq13n4jHRapVJ9pLW3F5Qc4WIwV3Cddrr9sytLK+ur+nMxahOqXvbXl0v39Up//L3B7z4c+xaOlbSTYXxNVt36BsqAV1oVSIuNwZCeCzZ9AXCoAgbCsHyg2IHFWra1Awx9cv54h8ipI0/sygirLS02g+R+NRYaOQaccTqFfsnk2fMSx0gb5T2BAX25ONw1+0dqtaeMVX9rbORl3sQ1USnq1U50ZhHVdnvOfWb90XGsmOyGkyeTG9roHMiuHe/OVu2ufbj/fTYeOPKlSf/6StCu4RETs0Gyu5l2RtxT5bNHa//Y/JnPjhwbwc9eMXmlP2paabTRrZUWvcBkmLL1C02KUy5Ah0IpJLQRJldhbKHkHNh824FygLyYCmiweSlp1oZ882zM+cvpFDAG2gptaIQR0oCnKJHTpiG0IC6ZvEGHlrKA3UqcwyXBXCANG8kZG3xo4fdNo7ceec7KmRfGy1dFG0cz+WVXL/vdvSNfWe+uqGQJZ5tjzZmrp0uxhy/KUVxxC25edE61xekNHFtZv3W5dSYud3CQ8z15xmmerqtqxwQLFisyPZ32v7Ay86hS42n71u4r2qLv8FYUqo7MIhNtze/ivwXDzhBbcjeIsjViQABgcpAAYW577CGnivEkWxYGcxefBQAAEABJREFUdM75Y28aNmeOrdDOUpFX5BpgI7bISk4Gl5YsGwCGkt0McGmNXIq3EPkRWvq18cOPHJn6yDoe000Obaw+3OjfspUb2r5/eDeuDppeIFE+NNMppfhssu/LbjeLHN/1IdsLrY1bm2EsJ0dnJisze9b3VVYmg/Z4efVA5V1V8RBT2u2WH3jl/Ie/uPpIp/OiB9iDmO23p5ptrWLed3CBNJj0bYJeRQbFtssjZBmlwkhJhwJbkaNtEMncOmCBlFCn2ZAnC22EEcyRUZLNEmFzN1IoLTYhjMzf9fLDVIgM0gjFv05p5eSQiqUGdOVgAAOhlSDhAgyoBRsieChzlHwFIYQGeCOi5MKx7FvQYUdwNBzZEMwKwaZl4O4z7MktZ6NZWkpn7C4nHh15htz1zMkb3nWy+x+48g27Khtx7fiq+wC/9fqHmFgvr625vofQnsLN8pAMD+HUJ6+3VT3RLMnV/cFNh+t/X+59p/EOXX0SN5xsHK+PeHtvPth9n1oT3vR7dtWWRldP3YhpLD3huunDJ8tv23USu9bhVUcrSCoSYjs4/QKALGBtPk3utgKZ4OYBZ785IyEc5EAE8BLLtzfjCOOCf+qzrjFKCqskHKkc5UjhSOtYLUwqjVZZKmyqDN/2UikTqVLl8u98fAyn1qbWZJYjYOQtzksM69B2IX3ocBmVJD45MrunEbUOLmGsObUapt3vnu+9/ZFrv72CxyL7u5H1J66u1bP1idD5Ef/AK06n/3p0t1K7glpnvRd3u/snHzXuPnz5wwiPjq3WUWo03dfNrz2hi2rptP3o3q+gZpDqtTNz/9V67I32R1fjR5zWE0ulUeDl19rfd+b+ffTBM2LsD073qhvpYudgxEV9u8ltD8XtCu4sI0kRlz3Ah5zRerMdKU2RmB/AWAOtCebYZC55xPJrE0JagWLd5C8hdNlC4cAclUIWCnXCblG8aRzkN3UWXyZkk5l/eml9DIsHd09jKj64gTeitPwfI1cshd+OSDUXu/3sFl+nE+3Kyo27Tx9+4oPJ5Q04ixGgjDP4kp1b2v+Th7I3OuO6bT6+slFp4zuwS/fm1nV6zbWB3NVMyhu+xb7AzmANWIaNSs7V5ox4evapuSMfs6dWn+OJH3yARePEDPcLzkmcMnGO8U6zSikp862CQdzoz6xSSjBRk1I4it9CSkhBioGBM083m9NtrRiyLIxlYjsy/2JL1jLDb2LTQm2AIsvyPLfFX+G8VTS05i5386PWseD3EElz1lw3eSx9WntqN0QzO/KwesM/OLt2AK0atDjwgbVv+V8T3/E/r735l7608Zak9n/HajdWRzrVCvpLU7ceu+IW8+bFke6u3l/7eCqmsE/EpfFo39nre52/S7P3ud67Zsf/4MqJ3z4c/u6oek85+HjjerlmMW2+90qx1OABl/7qF2rugcnFaca2AO5eKmJFeqTjOG6eHMchea4XeF7g+Ll0/cBxfen4cHx2uskfo2vEgDnwZIbJYy8ozYDeot18bJsUsZg2Swu/hhK54bYi2oco3IbZu6NMpGUhcEV3crof4fFt/BScyn2TA98G3VLvS/AdXbkrw4Oik0/pfOVVy//2+hsnXyv2v7RcebzXura9/sh2+3Wqtjpbu8+kfna19btV8dfxg58wE64fPPvHjS/++nE842jvxxb188+mL7pJv+iW8OeXGi/ulp/VzX54ZWL0AF7cRXhk3/1HD3enKxMN/Yy0VYUQopiOELnCmRYojBcv9eCoJFue5/m+73kedSEEpENI4UAoIUmnK12PEFAEBgQBAjw8jWDXYDIWxjIjyQazuRwwx2Iit3DrbloGuQFzBX95nkW0DDD0z+13++O4k6MRNqCO7Rdzj5dTYfnMPy2v/upH9lytklcsLV43P2Z6c7HSlcle/Qorr+iWktP901E/25sd3v3l3clvdZuvXJz8+1E8dXrhtYhm1JkvVI7/xecP/2wo3g7vv8YONmdqPd86iMIOVFZCJUirznw4ur7ova3tjOj+j7VX3j/aG6mt/dGXO2YBgBACt093bcpSShLmDDac4E3O2sF+MuQ11RmRZVlqtGVshZBFGpAKwQEQsEaIASyffIY3KQ7LkgTwG1sK6xO5ZfDZMueZ7fY8P/jsaByUXLJI0oWNud3L5TN2ZiWYe1Tzt1P83BI+q8+8xE3esiv8w6nyMyeyUtlrZegdqe25vjuBaA5rk8sL1TM9LFeXof9O3/LzN+L3jtgkwCOuWvjxI8Hz1iJkjdnde+AsAy03RRn9Mk6GnaPV1aVr2r0nmJv+aKr0t2Mzz4NtLacvOO08+kz1S6j8PuOWR02IXBaTuWuT5VYjbYLBNyYnKc0TFXKVGZOmWY5M59zlfZI6R0qH/lJQqkHX+RiK3uWAseKpOCjaSRSu55YMap5rvEz5dNLffcaghvr3uP4vnolelex+8VX3fdVV+jdt58mnOz++ePzt3uqbGvo+a1Na6OO4+sTuqTMTcqmUdONYQToN9KdxfAYfxRXmxj1/fMq7CQfs/mN7Tqyfri1iLZGryIzTKk+s7BrvTCnp1r+vftVvH8azV9Uj7an/jaUPTsm3Tie+bj95vH7scQAYQdzt5Loutx2b0VrnvJGrLLNZfpsdBNnC8Dlmrci7oyc7HYK1qA8k3yx4TeGRKbgLpavzlzm+nwnN+gIZrLbCUlfQjuKLiHEkFKhACesglcgG0DyIcwiev4P7DwdBsA+CnRWgpQCNRGEcSloKFD6Ucql3vBxNLx1ovDI9NXXc+9ew/aNHrnvIDa42WZ9DguOdwROS0iwWK1ZDXj9yqoPl3Q1hK9l+ndWzDVNd2NNfczacG9E/2W8mGa73juE0kN3UByKVYYLbsNsW3ZXKom5Z9Wxz4/T16DYjz6sne6Tbi590Yu63GpOPaZ19xd9VQhnGoXZqaZiWdKaFazw1JgwMQ7QTBq+5CorPLt/xh7BC8bllNExm83Eb6QrXFZ7opKqnnb51E+Em8CPLLI1G8wTlO53Nj0M+7bSEUTYTJEVql1CGfwjMeeLTkDGU/Gxi8P63qYPV873GyA4t95zihVVk0YI+1bvKq3znXP3AqAxcdifUYHgWCsgj4rpQHu3j6yMeaie6HGHlyxXnRNkNzfhJaAvjB56UApq0gU9rXgAqYXk8rfsdhVWM2kpYcqXrVqbqQVhVJTiyl5m2Nr1IxP3dxvmuxuiP1VejvkHmGYk4b1QKBlEmhj1fACJPcpBybfCha5Ik3HB6cG1hdojA9bgpncGDkJXoziKG2mRcrZuw2oDINKUwLNwEh0KN9HCz2Xw1WSFIJRnlfFkyAJv7qsHAhe5jNLVPn4gfXTbjHHIGGpWFAEwuHOt4woX0PDgG6QRCwEPLAR9yYVmuNpnTwkAKLnNW4U3ccx1tM+3GATK3r8mUQGa72iTZwupiHxuOgNEtk3XBUwholuP4O+E9t4ERCOiSDdmOzbtxILk9LhgPuS0NmWAUszghOAQSIC1ug5QKdGT3liTxKWiyjBCxkYmlJHIlsRiAdxy2kEtjpTFWGMtqwgjua3I4YFKyv9sN0HLkLMnl7eyXO5P2k7IyuC/0D5XWptfXs8Wol4LkCcuDh71xBEk7IZDxAPPX9nWWsOhMMOgb+5KN0mqvC1uHDwGudAHJYJeCINEZbW30T5fbnWkkuwz1xJrAqWYbPIzCOENPwypHOAFyAuP1kfX21WvqYXAD63D9OIEBJLc0Y4sLppwHIVjMABLGGD1Ilo80WgEh8lIARVGa5DuSvCZJkiXpAFQSMlSA7FChLGAzy0sNNKvni1OwWWsFDHcewAPTSklJ1Vr2wREQhUJ5T8MBRgL490PvQA9Y4Ag4tJCrC6lSSvABnaK/1mmvZYi177gTL56xv1w59MOjwRNU52oomzjjbpj04eRLTUG6cFtRi8xhHPX/VsNLfDxXXvOCh2NXxbgYr4ybM3Ysq3Be2lXwvFCUpQ347EeSGq9d/55JU09jHQkVMCrCpNCWDyBcIAmRc2NMzhm3ETHgTjtMnICUkg4M6MCDTuSM/PGuadKMWfB4zImgB8fPPtjaJoRgVQmGw5Aswc0mbe6da9YIQbaMOIc5NnAb6HBb5h7RFJy+A/ewjOUGO6g4XlaWYWw0Ry2sK6TkJuhmKZm10hVOtjA//orv3/gWJI+rpe/4rvY10Bv93uCME1aWnFA4IoPFQex5xv5ved4jp39gf/Vb57xDI/zDDxL0NrqYR7oRIfcMjUJmUxWZUqIqVoRCmm8JOmVtaIbIFBRi2Ay8w3FwO4EckSDGnpwVzFGnY0EcFbJGsJQwmqd7fvLRPmCGBLG2EkrRMoTYlgZ7jE1aKjwehRhQnc/XCFZgCXUqt4GcFbjNdE9pKeQqY3SfMcDWEmQoGWk9Rp8dCiMhPS5A6fsSYA5Yfyua7z+7cGLFRM1kzuz92YdU6tC7JgUcPryERWJSNDD9qN3j3z53c/XkyqfPtD9z9nN/9an0eFcY3u9STEKNe15mHWQpmolspSoWriPcIBa2tT/SYzylLGR+H1ewgcr7xgUSySNPjDYZIvJgApL7zdh8V2nDxx43GSXDzuHRk1CgyMFnIRumXdO9APJ56C0JIYXg0ShICMmz1gpuO9YhBDP8KmB5aKHYvYXhLspLqdbidlAI9k+Gnh/2VZ8r3fB+otgGB0qppBv6QeAPQmIx5eyKXvCJ+nJj+pTpv/ijBw/tceeCbnupHIYC/AOCzrhpy6jvGTmZnT7xgesnbvKrR339b2vjGN3X2G0hUMZaumrb/A06ssUqcZG6tivTTmxNPXVHUFIhlITksxe+AgwulEieJFWCnaMYsBCCFhJJZHnSfGgVoWUjEizfdLb02AIrb2LwVNvULalipRxsXCJTNn9jA2x+krIut7M2mdRSaSEHEFoJ+mgpNZQZwIJrpEDeEgZDEPkgMEhsekew/cIuBomzGnzn0ysU7fR2zaPDw1Ouu3XtpyFa4WnZdzqOFiJScebhgN/rfBvgtpfsqL/sdOdnem9pd19Tx1/NfOUvv+TcPw77dQMIyJJXhfKQBSNHJ5ovWHB/T6R/cKj9HnfPGlZKJ5t861OLFTMt3GplpC5iB2QwrykSnfCa64YldNYnGiF0F63IKckO0M768HCh1G62+t0e7x3cPUpISpPpNE7SVGcZm5ZSKsm9qRwpc6TSZiIHTz1Dd1mEQSihJJgnKcDWNhQGjB7bpJMr6TAchbFDledpodO1UC5SstHCc6gU2YuX0uUKgcvXaSAy4BsBfKEAGWqXrxA8PuCtjJWSOTCCexPV5tLz5oV2K94edyzdOLW89B/W0d1MR2EQxGnkux434PzRUz48aZQWJ8CrSFQ+JA90F5ulRzW8axsW7VjHfP6Ad1MpJHlXgtGTkPDrlkc5FDzXaEYY1kjw/ovLmoQ4p7ki8oWE5YmQs1NkKckfpRwUAHkRZb4rWcCGWEZ5DnY0nuMjxOY4hNhUzhaFcQQAABAASURBVHG446x1s4wxW4iBWiuPkSZ5+eiU9bQNNbpIl0aU/6hD4w+ciXGmjcivQJHF2IhsNTnRxgm34ogkSqVrYxvlTHTSM9ffqiIhM8968wjdHmpeJ4idbunps2qXy6Oaj0YtDckzANc38rhoA+0uuwsn+gnpEonpstwH3BKfj3c8jYsuFWCYBGMuIYqTbCj5UKROyb1EByp5FhD54PKQkLxc5VBpIpDnLJ2oFCBhBehTWHaUYpCKIqrnKEX2YmSWJvwVTNzcraGWaOg8aikDajUYOe42o7khV3Z960j5KZVbZjayyrIxpMMxWEua1m+GSleSWMCiF/PNzVhjVIJsLcu6mZJ+AlSN00f/+ur1tf8x0n9sr4d5FzDKcncNRsi4WBIIrTObhEdldhrZIM8IWulb5C9+A8/LIBirAue0VcS8kCwqlEIyS6Y4GJ6q4DyZYQHzJDlnzjC3CboOQdNQ31EZjoPKjg53btT5c8d+pVPtBWRLsQKHZaCs6kFGgwA73a4KT8Q/lOA1kNci7ji+EkLNw1RkK6y7vQRB6CBJsqBUNdyvwqlI1e9GiRT9FLVmT+3v46fQfm5/dfp4FK0YXRNQUjgokgUkXOV6wm0cLaEH1w89X7gWqeCIpNUxLlOSQpyDfJMU5+ROUlpwC+ZEWO4xa3nDLDijiWXUzx2YtZstnltwW55sEUW+UCiJwnLxUgCZ8s0XWvZoBC8PFXccd4ZyfJNyHG5JSSfFfGepN9PBj++972Pm4Jb7UVeHgJT9VqJ1HMH6IBMOlM+8yIzQmp/EdJWoSBM1HlW96kX3t7sjbsSwDy18YZXkSzgXhwWjWULJh6e07P5rU3UQp8YaLfkYhqWLoLz4Kd2hJ0NU4BwvclFgM/Kc+iBfsJPTlE93WMlYLnH60ECFsnCmpL4Ju/l9oS+OoygaKkX24mV+O7FhdL1ufmUNKBve+eAEQnS5IaVwtbLwohAdBzZBvQ09EjgjPEgVr/mY7gE6iktyop8l1nPK3T63iFRCJhlKYxV42pNBVFfxnsBZ7lUXXYGScoGgLwf/qUsZRcVD4EDp2PRWe6sfXS+BPxKkJkmc/JDK4F8+6pCvBIX8aVdIslJAkI4BYFCApNCYR9KQE0tdMkMrK1C5LBBC3J12FKeTSbeD7kkyoTL+5gjhwoU1FderJrLfTHkDDIPD3tmg/+4T13/pqCjF9dqE8Cu7ry7Pzk2kmIjTTEDWa6PIOHWE5RKAuf27MFY2Sb876qzFnS+/+ciDlq6wGO+yDB0Jxa6F5XNEcHXrNOtv9LEIuYQaGg4cTwnPpauFMhm/LyuEuPOgFfuq6JaUUZEmgcmEzpQx0hhhrDKQGryYOdCO4HrkeWJ4HRLSCimE2Uo5+4MPWyEGai5Ynn9tfeRWEluJzsTQbcucf+f2NFETZQcN/5dxxc1jaVmj05pu7nX50+a6Tfwy6spfbvb6y7U3riXv9fxnVt0qDjYnbdpZe3ba/LaF+iO18+7p9kfTkZ9M8KY9+KvSg777YLwP2RuWceoKUes6px98/4dMzaB0/CWngWamSvssIt2cU0mWRNoZtWnUdfuI5J7X1X0vXA3WEfRM6nWl76nUjeLIzWnkaC8BxgoLQgnpSEVZQEJxxcBwxeSwmvtMUFq6880bEiCvDI4UefjpzAIjrBE6P8Zxu2Rtns2fcQMlz9z2ISO3Ze5Qu3jPc5qRPnSzySn4VRz581vncC133Vp4JnMrhqdXOw6SRjyBuU9nxz7Rb7zkUNxq99ZwCn3E6B/v1Z877v+Nzb5vofxA9J+mvOcfwRNbH3rbGRybPLa0egifHW01WmP/fuTdK8ErDp+otEq/FoyG2fFueSSoHD0ZTYZzyNbhI4ix++juk59sDhcZZ1ToHDB1ysuCok02eA4u1LgQEEIUpTL/3iTMwgwIK+SgvGhxoIJ6odyBLHwKeQdud1CUKDdMszZ61q/hPajeUAr86QWn54paO0aQYdabYXX99vbIffZG37+KRWBZxnBmnZJ9B+JPlJyzjd23hF5t39nZbgN9dFP0K5Nvbo38/HRncioTU4hRnc+Ozd08/nNj9g87jc8YuHweBjCI40g6SQwcWrmf+NMMZ8HgDsF5FToVjuEuQIg83sOKbKdosJDMEtQphz7nKAJyCLnpZy0s8rQp86/NIuS0DfXcZ6cPHQiWFLJQqF8IdNgRaaYaEtZJ2nwdOO7d+JovTGIWColeQR2uzDq6iY9j4VO49ue+NcLiIXeP6DZSrJkREx5xVn/1xOkn3ty5f5D83Kgcv2btnzF2BcavPdV8flS6ddfCcnmxgan1STvXBFR6dSV42tzJV2ajXtTqt0r7Djabq2YwLPtpv/neFYgRhnI7htMZeF2CEIM0rFC0wywb11pT0lJIKgSLdsSgGVEU8fkMHsQEKboNA8JyD5Kaf+UfqkSuXfgz7HWoXNj3AiWp5g+D4PAiPZvtwgfizn80a/Rd64/gUdxHS4vH5941hvvXjj3kFprDPWP1etzDiYVeNDa1t5E54VKa9mz6xuZodCr7EO4zf1hvTKmDe/XYZ9E4jqzdRhA8Hn5+759PfwjZTejevNQ1SYSoNFmGRjWave4d/xX2AqEyBrQAZ0Swx7sGBn1YsWiHkmDjlMRQGbpdQJHAJvgFFFdPm7PICjmRm8vPMktG2XSu3OGHPkThsqmQamoXQOG5g7S2ixRWwZoNG5dSZ+33ju45+aC5qljHRr9kxnu1+E9WZ5567Sl81o9ww4Nucn+yp/YA66FerE1hand3ulypek9ZXE5vxf3whVnRh7f3eNVfZW8zJX2294xm8F0PjjvtA1PCN31MQPyHZ/iOgCUB3Mfs7bytiU9rEbo2bhfDZ827D/JHbG+naLyQ2+13oFsrCAz4k2SOrnKTJoicSBoAOzAN1FwUuULm+Qt+OJS87JzqueniPibjI6difJh01VudDKv4AObfoWU2juXrU9+f+3RjNYM83AKMiGu6bszLquFzp9wrw7OVz9/k3Xq0uro4c6r6Pzq6iuDpV/euvskLbz1RPXlitIx0UT0Bpd8NVvQqKs4ZxFMHJ7hUGh/apXTDRdprR+YTI/Y3uuVufcVrK327MRehpyRuV3ARmXOqbEZpW0U6bMe2ktuprDjEYOcNSoUdfA3Ebfp2DrY5DLx2EGx3B+ulmBzAbzQE/wjHH/NH015rfa6N1XfceurmjftMeGxp+U9P2sNo9q+jbv3K7PK+1XGx+LT02j/ahb8Hbkbp09Xd/4T5a72HvP+BV3/85Mg/7Gvd4OEjyvmzQ/f7lDfy2l298uLumZ6PCvm/vnJsZnZv9y+WvLRWilFB7cj//sLM/FwtKqduVrLsBIwpv86XNN4dbI9V0XjRGnWi0M+XrEUUdunAV9aTcGBdaVwYBf6KwVeIwZuHMDKHzW84EoIQ1K3EoDR/HdHYksZqA95UC3DaA8gLJIB72zLxrC9APTcqFbVaXZk6jvTXnbYbrgaBv5Bc851jqzfsA+Kzbh3HXJTyk73ubMxP3Mgb5NwiTn38yL4/n3ngGx5Qf8vIqV9A7SHe9Y/7/Be+O4v/W2v2za742Lr4zJH+b0ydWU9dE34JS6FWMq2OVSvz4kQDI73G2viJQ9UXAx/EMhaiyagU8W/wm8zh9slazu32pq1ccfvgjOhDFGYhBC3Ui2BQ2V7EUlooC1AvUGTVILEivykHFIBxZrQ3b5vDtopqQ0k7wWwhqTjbkjtI2ww7qBz0jhg2yDYJZgl6FkPkuGlklrEgsiy7Ttv1V92orm+Eq2oicmV4FYwy/Z7pzyw6euEh7c5j4uPR/Off/oXTbz7q/wu86+J04kDNVd4X187+ldN98VjjvcmRpx6r7CspqLLvbmDVOP1as4wNZIhnrxuZf9fxs/+47mf8cazSbEa9rrVC4BKTEHkVIXLJqpzUUApxm5H27Rj6UBGDRKUAg1CAcRiCASEkPdjKUFLZhLXcGrnO4oE++LbJIKXbElu5A+SLZadPQRJLOFRKZgmSX/RSyLz3rY/NXP23mHpdpbwmQsD59xHIesrflXUM00mRigcG5R8N5PditNS4avmaoDSRJmf7QXe2NBscreyb3T/yjH14LLJanCY8N3woQGTyyxYLSNBTb7W9d2bead5C2TxMlgK+VQ1cYuJciO2VitBzmjQW8xpKWoagA8G6BcKQf0sO/EHyPM9xHMaHGNalku88fhFspZBUeFjkkh/SNpRUgKJptkKwxcHeuyPBAd0x2OB2B64Drq9iJCxiL2ydow8Sj+Ge+BOb9ZJWWcs3HgOCuA6vstZou6OnJ3XkRY+B+zv1/o96N6Cl5wScSAaivazTB6yojyyd+cWTLma6OKvTLDX5qVvtO8sfmi8tlxKkZ9+1qE45Lsqu8vNXSZFKR5lM4xIT58IahaRSTKSQzBJDnT4E51iAMyUY0gKccgFOv7CwlJ7bdcl1weYKsOlzIURuoSRyDfQnGN9CUiG268xuB4suhKJTlhZKITk+QmxLg24xwzeIWT+Fq5r9ZjkzX5hvfGQtcmrce27gllUNfU8jS/b1+k9ei3/4ZHR0BdWJvebghlwceffM0StPdm2SppKtyVCZRI6gPHFivPX3rVI3zBR/FJMagQ2YS+GCCyVwUoc/xrDCPQDOkWQQJIP0EIVCSTDLGDIylEMwS7BiAda93c673SCF4P4TTFJSEKxDOfQpYl1INloo58ti+ZwvOT6iGCglsT3LkbEvNsuNyBOaR3UHTSwli/zjQQfI/KTsTfxWhNYcjL/s61Mzp+KRqGEmdkUTsw9Vjd9DJ5Tfderbzqx2w3fW3KtWq4u16eYVcOc5/lLZ9aU/enbG++cQR/LlqKUan2hAZr10I8q6ZA4GaT+1fGNnhUsBI0D3QlLhLApZKIXOSHKCBKdMcO4FaClAB3oWjbAis4WdkjEhWETkKxHnnY2sKcgZwaqC6m381balarVaubPEjnfEoOFNUTgUGY6J4PiIYtFlWUZlWSTOhthwTiiMolnrlnX6YQS/G0+sHYDmTomBlmn348WoY+LeFNKfFLH+z3ZjfukZI+vr7cO9q/u1AyI1Y+D27YpErP9NZ+WdLSfir6g9LZSKN9z8tc4igwKfhkh5tVUBLjFx2MT2SsXstls4UxoLwqgQtBCFD6dPpZBUaKcDaSNYhfYCLJLbmaOVpgKssyN6g9Tdljp3mOILpGiQisKBmgtmuc8IskUwCrcNKXBKql6aN6kat7pu1/maXQvfsNj7/K0Tx+UkqiFkq76xtKuVjo6XsW/yhfaTh08deuWDEZ1IR3Dj5HXN9Iuhi2pSjrVOutHaPyx0PheNOLUIsTY2bfXrQoQqROY6icO/+UL4cMMiGhcviwEXkrUYw6EsFFpIBkEyCBoJGikJViQ4cYYiSXjOp0zZIBUBoSfB6gNoIbUQhLECxloNkcPRlpA0cmaZtpketLD5Wx87INgZwbYIW7HWtcoGni1MhKIRAAAQAElEQVRLyyXCWJfKtiQM37h9YYywxndM2TGhsZ5RDtyynHIxrTBWDeqMlrVGKmOtZWsF2DizlHk2Slt6vQ0s6OuBm0QmurLTakfihY798HizO9KHLHXklXqsDr2O46W6QgPru3XFGz3QmQhXuqzaMyPWE+Pvq/g/bOsfrUB1l0VLwR0x1Q0p17Is0T2ljBYAZ6C0k63nXQ8+GCSOp8Agt4NgTOk+LKBOC0ELKdFak7AgCHzfZztcsLSQHir9fp+SOu305+8kVhuTac3rVZykW2AjBGuRDklXgk0TQwWDd9Dbsiy7UyQgd64jjEq0l6Yq7cpuR3S1tya9fslxQxuYxO8kflc4kcMre9otL6bBgg5X234zDXgEOFlSvdN+znHo3iBW3nDrxNv6h3u744q6US4urK0fTq8p+w08MpjeV+7ItSOV5ZW9pu67c1KtvrO7+led5n90TddK/gThQ4u0bdaKZjnlIjSMDsEAFfaLl2SrAKtQoSzAxUDOwjCkwmaLjcW+kiTfXrSwO2YJKsySYyJnka0IribGx7J0OySQg8udyHUrQEBwGuyVsgD1O4Ybu8hsgl7qJBD8CQDgCnDABwgfHm3tdlCO0bBOGbUAY67TgmrDM/AEwF3RB7ei5Ul1x92cVzqH0vjR8sqvLJ952bx/S+g6jfLoXLdtbvVO42HRiVL+KxrAcZTVEdF57UrnNyLnH8PJ/nQVVcuThoOTkJ4VQgzbLqZMObRcvCK3LgpC3K5B8sG4sx1yE8cx9xn5K4zsSAjBigQd6EYf6gVYRCN9hpJKAcnx7wh6Fyj87lQ6vKvZwYEDqBR+osI0CG3Z79eQ+BA9+KtBdXHEWxtvtnct9pTDM7NWS2qTvcnJbKqix73AQbCMS0zKXwpKFdXf3/19P/uRaNf/dseO+yujnb4LPAbRrkTpymznQPnPSvJXKv1fgboprLXqo95IuVaS/LGF3Rn4PMWpDMBgFVEr5MB2CYLVzwEr02KMIVVpmlJh1nEc13UdJ5feVnIcRylFf0ae/BWgP7M0EqxYjGpTCoPtgEEBViiqUWG1QlK5EAwPYMbLQ9lRE5b37gkXZZ2JOlq1vbHzTODtMvpEaf2W0ZX56dMndqnfKEdPbq1c0Wo6TQNZQa3Cji0uNS3GOK0XurWVsqlPfHZs8YXLp37x1uQDy40vjY+qvfWlXRN/2RC/dCb+5eXsfa7UV5UCL5btM/rkEhZU2SmVlWOR9FNGavt8OQxGiqByqWCt7SgCXSqVXNelTnqoV6tVSrJGwgrQzlqMM4dBmpPkdscp7ecPgyGnPY9Z/mVtftYxx2/qyM/ZTfv5VW9viU0GAR6SIULX8jpuWkErOdBZemPN/NHM2O/tGX9GI7xfz59ZG5teODC7pl/a8d6hwreh+6J45cr5BXUyanfGeYjdvtk7zQl3Vz5m3e7WTiYBz8dJ8ZdSPLeP55Savx2vvq698D9Wlt/UDU8hNnFUXujJdifstkvdtugliVFpUPKqnhcWHXGyVCiHYPaSUFQsqpAMslWg4KmwU9KtIKlQuHRI2HbQQtCHDgSrEGyQliF4bArwpz4jhB3ollnAbNLGChcJByF0vonTVLfQalbX8f+leBHwAtv5btuW6N/kJ/9cjf8m7H5gZP1jI/F1nbGwMvMd5cqLBV4APCzjLyRjegSXmPppyxdhHvsUy2JeV5KGHW2cGS1/OtR/voD3LkycmXWs48+4btXAW9c9o6wM/MA1YdZUcdsaJdS44vWPKELMTcCIM1KXOJbcnYEmqLF6ATbFBosDk3ZSwlvl8Jl3DmEkhj6syFqU1AuwzQJFtpCy+KJkGSVJyyXy78HeK3Kbcntzm6atLw8lT5ZcqVKju+iaQ1njSZXDPzs3gU7tMwvml05m3zNffnRSf6KrH580//sanix6r05bR7rurD/z7GsaP3o/f/doB9z1Wy1e5LfbypLYtmfK/TG+LoTYaFVba15W5TnQBWI7jqm0OrmiRdZKx9dRQd3pefGKztrwbcV3yj0bbfTWeYjxKsgLISnk+cajTA7SRY5i6GYHUSskw0WwGUpyRp+iWZYySyPXCtkqQCMdaKQ/3ch3AVpoJ+hAT5beBm6XAoKbj7BSDCClIoRQAAnm6cr7J9/WSCob2QFzCBKnl0D3syCb0iOvCdXT7VkbHXzaw71nj0V/AH+hUglHJRzHoNQMcKSU/ZoMfjC0b7bz4a3N5y/4z8s62JBW2BFrpd1jnVlrlfSVHR2zVev4PlAH8ktGDbZUM2JG671wK7YsYjnfFas9ONWkbNsJJlpH3RvBP7YK3FD6VKM9f3DF571mpVTtBDKV/JE7dVW/K/ptEwfCDVtY1+2WiuEl2uFlpx87cYo0y7AP08YzJjAl3/i5VjKBwxdWZmjkS6upVI2pW1Oy0piK0Z425SxTWRYE/Lt/z8aR12/ZFgLdV922bTuO58dllXrKRcfpkI/zQWqJwg5gyB8A2ocgMbRcBiw780iA/AwT9R+pBw9x7KrTeeP65z75uZWjq8iQZEmURgkYlCzSfYTLVcjgJtt7Syz+pLcH06WnHGi+TE5AztnZ8cb++Ub1zCiyRpT5qx55ME5WrUeNes/x0HYZh1F95qB/655exYk8G5DYkj82sSDVpDc2c8bdm+66sn/gYPtApTezjPpRm+le+4pe4kVN40i+10SOcGQvNG1pjS6VrmnN7F8dKa2Miu4uR+/x7dy0mTyMxq3uGh8inJrhkCEmvJERjEeJc2X/fnt7+6pZKPtNz10f8Zx6Nl5ujVb6Ywfbk9MZ/KDlh809wrsy2TMR7QuyoIRQZaIf9xIVaaQxIxHdrchfNvI2Klmg/QlMO4dN9Zl+PBHF/67xepXOJ2RO2HyUUdaPEWdc0YgggMD1sMf9imvfjuxDa76j8fjG8mi4sd5KVpeTjRY28nfBwHfOumXHDVw5KrLZcjw3ZUf3o1wGlmO6dBLpQ1RHN3r+6kI/0qY2JdG4xVs4Jue7dsnHRlCNMRY1a9GRamxglBbIHGgbVFy/6qaJVmlwdle/We5k2HDTZdldjPtLC/7G6YlYTpThiulycMXURMlXzWRpo9erOjM3qi+tlU65OqqlqFlHB/HGyHp3aqMzIld9x+rxke6+WntvpxceTTvLlaYb+WVTdq2TxHHs9jNfZ6lGwoMNdznJu1zz3IoaFdQSROJ74vbVzfZy2nt/Wj49JSwPmTBwAg3NUgMNZXgpRYYF07vVCzrOPtyA1d85Hf/mdVMf6GrpZ4hbIx0czPaKa65Krq50xhGWw2QF0TGb3eA488rtr9f8UzMTrT1jLafjSMfn71plxLNWTWSL7VNnvDbcWjpXX5hOVr0+D8KJlVKtNRu2r4KcqhlvBrqSITPVlhqLMyPs2lq7uSK68Zh16rZUUg1/dCI5UF/e3zgdoxd003J3rcejJDkQ25kNX68DSju1rl/d8LwV4XRbanJ978NXHr23zRm2F8VKgtOpOLXmrGWqOd7jxk9sYgMbctXyd0Qbagjp8nFgd064iLQTeRdRbQeXHnz4zcqi8wM68jP1qTH7zyhxIqnQqeGZaXhcA9KD8hUkRjSQItLLNkzCqOJ9Ap23ZatviPes1F2kk7/u4S2VtR+qnCw1e9+50HhOjPmD/qmrKzdeW/7giHhhS+1emZrvzZ6cCSrYFSG2vehngvR101f95CG4bdwvwivXSv9nvXay5sX15Hh5461J67vP9ss3NMw4lJTj/A0X4AOoW8Zu6XwfnPeWxz4/6RwLV48mG//Z23jH4vKTb5wf+dJumPLILlnfu5Z2aw/3Dv35Y/a8/qGjV3TwRB293oobuGQUHwnqH0z639bm9XVn9XLzeXX81y5vY6rc3oWj97GvOYw50ap01uINYaD4Jp2BFALGtx7uRpJ3o+7tqgrtSDgI4T1QOKg0rt+N42HfWQCgjeZhxbNKOsxBRwaptInvWwS22+itlnodNwl0PJv1DngopRXX+T6BR3eSJxxvveRM7w9QfZ0r3aNp/fr1vUfOfu/qmddh6XVYf1Jvo3YqUlwgVhnMPm537Umu86gYj8bB1z3o4EseOv3A0cm4WTLNZI+WT98398L7TDy55Dor67Z91pN9yf3fmb1Czz19euRXDslH1KO9thu0UMHY1cEDnnrltf9z3/gr1GnV63bPNhc3UsiN6aT14PXVh863vwN7X3PVnicccKfqSFMgm3nM7P4X7Fp72OLky7DneTJ4QHe+deZM92Rlz8b+n0kav7COa0UaZmmWeeDviCQO5I8Leud9N7iy4s6SvDOHiy23wWA5xRCe5NrqndAlhD3XOo4jlSCfDheZRJZYYZSwbn66wNRL0nVS/q7ZRIRy5jfsLeWTsUmjFtvA9H075adXcQirn/X0uz3/bVX/nQ4+Y3wxsuv7d9efEfa+tQkNg3Fj5LjTi3Hq2Nyp0Z/fu/Ft8dGbTt/yrvm1306Dt0D8W+SXjP7BZPkXe70nrfBAKJ0ZCUy1e7hrX9hyfkKnD9LJUtT96Lp5c1Z6HfQ7o+NfuvWWaxdXflZGry7jQJdP0bBWwjRa61/pjpxOXzJ64oobjt/4X9mblkuvroo/Qtpszj/5bPtP0zOvQNJIy+/z8VtV/doQH4jP2Plbfhrj3z2OMjJhK6iolJs/D6xGlH/d1c9lI48jU/DcTOmm6aPbXFoUAASfK6k2qTHgtVtnNPDIFHW3pis69uLFZGPZzXql/AKh2kujG8dgm2Sj7lzN6mp2l61O4289PDTqvLBc/tnxyR8PxOOy+HfWVVapfO9u9TPYtxHMyH02CG9KFjYCNK8UBx5xxepfXTf5/an6ad/82tzyC+fsU9D6tYX6qqgfgHhpBQ3cF9P7MYVH48RPb5w4cObszceqj1+tPR7jL5qr/K8rNl4wtfHLWf/96S470n/ZvuCBwVjWXe124gxzxgSjzvJ96tPvPojnoPFSHHplpfJyrLxx2azW1OHdYfaQ+ptt8BML7muNeA2Cn9kYfTuAqye/ZQojEEoGKLlA6IALmluWZXcZm+SJrSS3Un4/NNZqUwDGErnxQl31wwwn00CLytXo7BmrdF3MG4d/NxhVXG3Gd3UpMBUXZa3SjdrytR0LDVTKlU54sOeMZ2iHmA/BOQVR6Vh8nY/J+ZEb6+86i6ebSYiakUvq2InGulzcNfLy6fYbV4/FJ/xHI3ms/9nSP5UjXvR2Sfh7bOmGPzuCZ8E5xTUQltzY12fQccM3ejc97dbRbM/GQ03jWdUzFdyMg6M/4ZahZechu6+caX+50qplC2NnlsIjs5nCBxV+Mxv75IzBin757A31xcP6sOjMHtXxmMqwFLWffcq7eTzxVr9SOyUWZsxfYK2z4eJM+N5jS69OMjuZ+Dose8mq0P/gj2H1i4856i+oftbtYz0KqukqgjRMpN0K/LnfuIi0Sd5FeN6Zi+bRL5HBNwKlbjwX8V0qMFOx29Z+F6VYh32tEoOEosimcwAAEABJREFU4cIGvjyu4ADdbqfWPVrKVni8xg2/P4W+yfhIrCkHbnQE8x/routrZD2RKQtXCY2W7nfXP7qh5kMZSnkNW4F2eQC1DeLeWZV8so0Uju9Y1so6QkC5braW4Aian2/vWwmib3POeNdNf9+XvQc2nLMwL/1sE63dGJtqTjmrqPbDWlofQRVfxvobl3Zj8cqx3p6HqbbbtA0jRoXTCdT7YwB225NpqPb7/TiO+aMXTJ6yzNLCOdD/suOOyBNCsD8hcrldob4DRGahSE220Ifs9K7K+qNQnQCij8GGNdamMrFO6jKwuoxMV2NMMgjaIkADcsp4CqEwrpapKSVO4vlHgX9DCbVYRVloHaN4+UHYrkLaf0krxxpdGP1wiNREZa8t8j+oZvM1+Y9xTVaTlMNIrJ+wkgunhArOoP3pSK1p+dAaJrD87WdbEMpxx8cr3qvQee1i7xdWs59H52Xx2Ved7v1qU/4sNq5eXo2wUF1JHuicNouIl2Q4hnim/ImgYI6c5YDFgEsLG0VRhoy8FZZMg1xGWY/Zy44LkidEzpkQm1KITeWCI5CcgUSKtU+ddSDU/YBrEUEjcZ00cJJ8U0KAd06lhA/H7cJDaDHqdB21gQ6SM5NLvb3Hq4q/hIF8Ky1Hug3R8Ucx1VcxqrzNejYxomLHRaXWqZfXKhaI9qcshKOifIBw+6P+ceHLSituetXALTkpYDJdQ62BQJ51j+5r9foJPJGMQ0SNtdGs/sL7ZS+P1l/Waf9K7L6uZl/rtX6pHf+arv5Gufb8kV4wtxHep3z4Gk/A6RqDaAlRa7FN8gbg/uPEqVLJeRQiH4cQAiJPQG7nLqRy2SHvoEV2vr30nOz2ooEuOogCjvXvO6PL1ZFD1dHHjury6RClUT0+k+0eNfxhEvCQOfyZwzKmq+WRZjgtvYp9MCpvH93/xQft/+yDXaE8BQhGhI8/7lnDbTa4k/Fo9H2wByROFKEvcz+++QtXACk/rATr8FFnm0lL5WaVJtpVsIKLo5e6mTvqwMuw0h45PT2m99eDOhJ77DNnNt6v3Q+IxvsnZv9x3/iH9+ADJfnhUuXvx4IP1vAem76zoz+mw0zWM1h0+u4yf/ghXQNwwjRSzUmyAO8MgkuPPHL3kWtORQgohXsgXZA8IQS7E9tSkaXcGbHoMqrGxyeBf+QhNTr6AxP4EbdfbzbRIlUlU6v5ZenBuEK4PH5GZC8O+4t+sCEeqzaeWj5ZOXn8g5/rZT3f+B4c62et0XXsS5fVMsODXqwgyrJqe+qsWE2ujKPd7Tp8fAEuOehnnsm94toyvsVPnG6t2tAxoo4uOZCe20a7O5aJB5lxwJc1tb5U/ejaWXPzmOc6b13Ek108xTafsLzwAzc2H3sSj+uZx/XO/PDJW37uKF52tvpLJ9b+5AtADb7PoAiZVWRBVc4Ze7V5Lv+QMpqY1Vozn0sMkmC9gXJZxQXJO78XIe5wBFppxwihamfrS2+dX7m+097f8X8ywBMRX9NaxWrEa4jxBF0ypYxr1tp1ux5WV0d+wp/+qaldQWXkQ7Cvgkbkxq7suImM06tRfqwbj7Ud9hxzGcdIfac3Es8Cz0L3yg2n6fU+0NFOyUtMWY/lY969Xnv2NEaQxTaQNQ9l21dwVRZ21CNhHhU3bp2w/9q10Et/Z/FfzUlnvPyY0Yap7zF7eRqHRkzpyh67e0SPlu4fjDynNPOk6n2uERnQD0uZG5S7CGOvOzgKSBLZyjvl9tvKcL8VFkohxFBSuey4I/KEyPu+yC55OUQFUspZzOAzaH1xddGe9R+GPc8bCb9H6akoBu9gWvetjoTWMjZZOi3dn9u99KszZ2ZWTn/5htbfALfeVyopoOK1JEUazmLf/zcnp4QjXV84KXdfnHm2Uds/vutJk0kjap1oZx/TiVVlmAA1AP5EMv34Xf5BtON+rTQSopYaa6SYfuDefd81gUoqkvslr2/2xXjaf0TpVu9EZ3n95/zqy+JjTme51tloxKdLG6sia85K/QOjE6++av439i/86Gh3DInf6W50q02/qmZspcQdxu5y2FwUH3JZ2KWUjAVv0JwMdSEuIZJFUxcjJX//IJRgb0JC8CEDYwk9SMVQioaoE4V+vnTRQxtNlZ4IFkI+gX4VwUunRj/1rWcfsl5/gzvxgVL2693s6VH4FN//Ma2fv6zeLTufDE69uov60shnkpHfB/6166HvalMKMztrk2w1WcKxQ9P+59D+qzR+fK/3uKD5tPXe229Z+oeVlSuWRj/pea8Zmdy4NsBa1/POBksCoyu2/5Wv/NvIp6bMH8nWs77Q/N75zg8Z9+W+/j+VtZ+Ukc7Cl6+VdDWxbYuPxK/K3LeEEysbS69uz7w3mPvV+tjj4P9QZl7XqX64In/J3Ox/7hGvbZx+7WppdXRPe0+2K5ufjVfjE+V1qXmEqGYkVL0/miBBgCo3v4Tfd5JqHPFiVU6yfs+3U+1KxAsxnHZc1lU7tzJlGlF71OzuOxXUE4Z0R+ACSWxL8gI+l2zWglUkhG8z6UCpeUT/uHD89z+Z/Ss6vL4/dEz9Yjl+u+7/aRy/w/TeZKpPMrMHGruX9pTfOtV8AVpvBZZMMI62E/RdH6jINvxPwnvf4vj8rgPfcT+8EbW31g/+3sH9P3Fw3G+4X/Zaf9bqfrDZwkbX9BJEsPBj3zkqxT85yadt+Mx6+OpqyN38t+g9/0x79yn7n1H1D+SXPvX5Xrdd9cOyqOhbTPMD7e5fJNNf3rv0A2dWX9xcfyfi94j+z6v21am8JS1/CJ9/9yewBIFuW6+LVbdqvFkxZ90wcEqOcozgSteh68J398d7a2hUojocbgWHG1IoUUbZVe5U4lbSPXxSgqPs810CvvRhwAXPqN1lyLtc85yK2pZhQ2ibmdSFqFuom4C/aeP5o/JVDf3Xyh6Fm3qCd5WeX2qONG6pL/zZwqnnfmH1V5ZnP7v3CuzzoVq9W/mcj1o98MJSq+sT/FPD8fU3nVn71xBjTnssbvq97s1Z5090+5VJ9hd6uteI0DWMEyCUDVKvdGvo/K2XvN40P+mZU41QVMpcVSvQfxO7v+PVfm0MTfC5mqZc8pkfhfgsem9ON16Rph+TOFotxaMqq+GUcv9S+68SlRfXcLMpuQj5uxCS0dOTYx/bg8+Ukz6QSWOQGatFonXsrnvyE6b8f0NxTIrUz08wwUnAFW55qSb+KXQ/5ngdxWoQ4FM49RIwFjHuTpJ3p/L2ug4U4w7bz9BOQP68BspBr7zrhprzltX1Fx/tPmvd+fFk/FmV8f/eaPxgZfnRmXmJxT8Aa72ms7ASzichOQN0XOU26vetqrUavj7pdd7S3PiF/xTPHI2fa1decHbpeSeiX2ir97nVjZIbWIHBFCSsn4kwU7GVN1n9T5l5wXL7p1PztIb/3yfcZ1ayV6H54dbGygbvsWUbJobLPx0PGyPphLpedf62jWeOez9SrT9RTj0xHX/aWulla+mfRvZIuY5Jo7GSZTHvzP8VH3/1yZOvvzm7acXASiihYHydmH56vHvyz4/Pv36+/fmO7WiLFJYepm+73et783/cWv/DU0mL203Bh1ZYi9egswB3Kw1mfrda2KzsIQ5EApnBAVfYipO0HRPDboTHk3DVnLLq36H/j47f0+l8aLX58aXGyan6yljNG5MN03bjFc0fIlDjzKaUA4gm13YTvuRdZLyLqevk9LuqI38Y+u9xnX8JRxanZjDrlL3TlfUSAseAmwky6at2Uu9p0dGdCDe27cfX4r9uxu/tZf8Q2+v6iYhbk6nourzN+o4vXEReNxJNgXS0HAYnesl/rm/8fbP9gV78cds/lnSCzlJlvqeCSAMKCWJ/ReIjGT6FcjO/IrhMjnJ9RwBKO63/bOHfkJyIHUhrreCowGXYFV3gI8A/8yLgCDfFIPVtTyIj/YPcXRSXjbwUsTVZHkcOWoGLK1F968YdF6ZcrpZGy3bcN+PtTPacrDsan5m4tVlbakerqimrSbmeVSom1Nx7MmoDNWBqoze23id/WaPke3w/XnScjq+SQKWul4m67rL9PgTfyzNwoUPnkeqWkZQz62VTKqhJm4p2Ct6DTJldrI81licFZKoN37ZTlbWyVl8kmZvFqhVUO2mt36247XC87U5n7pQSdYigrSLhVbyyDMu+G8hJNT6aVeqilKiIDOnYZqnR0viB7yZuPRsNEteVCrBe6jhCaSdxIcutEtphgqyTbmADHKpwHc/RCTXc9XTZyIsk1yY3nvQzX9gAxgGk4/A5VpMrZdvjCeEKpQSjbaAyD4y4hg9VzqpGO5HJDUpJLIVksDnmqDAMIyCONpLeWhItj3ZWgk7bpF0nW3FWz6Sn4x5/F5Bxvs8RIETmA1wpEEZJ7cu4Gqd+JF3teB78EIFH2IpTk13+SqKjLDMmAcMsDVrNyI9cpD6khMONI8LUhn1VagcwTbFq/FUniuIFvbAmNjoiXYy7qUiMyYRVOmUDBoGIkXphIKyVriGvTkpdxi5bQRmlqgmNb+njJxDaowNElOBuJXm3am+vXPEtXImSg9BLuT18J0YYa+X0u/5S0zvbCueb5UXlR4FBuWXq6zO1bsONgw66XacZlzpR0G+J/oP1uIcKxoKzvt8rK5BOy8krtF3bafjxRNmOGwE+h0Qmd4vdPAdJWYjQMfx7U0XFUFHoZeXFkW6nmmpPZg76Xrzqry5XzyyN3doxbfrzQek7FaSuk7hVUfINemmo+wYRf2TlWpt3sBS7a73qhlv1QiN84zqSjzdkXpKEWvPtX8FxpQPHFR4XJP+OaVTaTltxEqcmzmzmaMdq3mhM33RjGyVpN3UyLpYSh4oAvNlpzfMJdyPlpzNXwcXjQn2JdiJEFotuTzQT0TSCzx7bsSLVGVhCREK0RZaIOP/WTcy3sNFGV4v8n+gLmUhp5Od8I4NO5To+KJpudZeXtdDHOkaRpsBGhOVOsiL7UmVKumrBnceIHY+u6DtrjeqqxUp9dXfU6GhvyelmbmRUkskkyxLNNQ8ex6uQPSkzKa2Mk66V3Da6baJUyq7sSKnzolSygA+1TOdW287/D+eGE0fWcSLHSQg4vYzcxElmPJ2KfuAGomN8x7cydXxfSE/5KvL6vE358KX1Iz/VeQVHCKel+IeOrhTGGCl46blAQAtGhoViK8ntaVhcKKxTKF8zqTqlGibkOFDJllMtAA/WI/PU8kFxFvnX4MPRhppaGgms9JChWg7mPK9US8AiFhQYVhkqhf1rKC/LSGQxgWKqhSwsXzNputI4I/Mj9fnJ6c4sn1QIkGKB4xlOuBhnIfsRt7Yu18em1g/NnDo0tjTm6SChNzb5K9xoGFan/tXHsPftylC/a+PZPDZZeThJKgQtXxM4QaWzor/wppubv3DTdX92o+3zAgE+VIp5FhLbiamhxwN3pbPxO7fM/8znb3rjpzrr3WZtcCPYcqN/UbGQzJ4PFu2I8z3vsqVonyXynl8AAAVYSURBVNWpUN41kJohbrfz2BwLKL+GqGbKQd38G/Ah4CbHQYX7SCT5mXnOnDeHGsMi8gH9Gb5LIfnPNSeDqzxOYdOB2gDnVB/Yvnpi2HuhUBJ3s/vbdh4bKmZLSTD7NUG308zgT4vqBMoT/pxFhXcN3/JRfy5/HCQx3oJjotjz3NG651Xq3mgN0l/vsIgYTqGIVCGHxu0Ki3bEdp+7qRftsxEqlMRQoX6R4KSGkMM6NFEvJJWvFWyQdZC043a01l2Ol9qqydc+X3JrYftUh+MMUNlA3Ea73+wlHdtKuolnI7U5/KEb89urM/u1xWUZzCZ52yf5tZ0VX5RN/t9nIR2gmqGRWYXI9HecLYd9GshCespxEU7llXSnlMQNsOj8iezYyPlu51ouR37Y9fnKXW5ecpLEsD6bLiClLJSiqNBpHKKwFKV3QZ7TDlsrGpFtKU1qpGzz023KdS1T/rN8LSrGSc8Cm/6yJ2Mp17FmOsuym/BVsQW5vrkoC09KOrM6G6GyI1hE0KfA0KcYJ1sgaCxKKYc6axG0nA/aCb6LE1SGDqxbgG0qpdgFlcJCSZ2gcqfYnOSd+n0jOzDoX5/T/yZ5d8LLkLlCucg9cSeNXqbib5J3UYEsmCtcyR9R6F9b+U3y7iT+pI3Y7kTmiO2Wr5X+TfLuJPJkjhg6fZ3QVoznm+QVcbgTWfA3ZG6o3Em1e7j4m+RdcoC/TpjjuDdf5jigc1CsNXoUdmaJ819WitKhpH8BOhcosufLovR8eb7nXbMMWx5WLwY5zO6osNY59qIWJe0sJRgEglmCWYLZHcEigm4XBlix8GEXBbY7s+gOcMGdd05DRZZye9Nf//pwwEPljsd8kW533MhXrfSC5BUj4GTOQWG/V0iOvBjnUCmyO0r6EEXR+Uph/+rL4Uh27PqCx+bQm/W3Y2j/Olc45mKE2xXqF0LhTEmHQhYK9XsU7OUOwK5ZSrkj7mjnsRrBapT8/a0As/cicOQcLSVB5Y5BH4I+hdyuUP+aoBgJJXH+AC6484beVIYgf+c38fVpKcbMsVGhJKjcMehD0KeQhUL9HgV7uRCKflk6VIZ6YbmjnUcPep8DGu9F4OCL0Q6VInsheZFuF6p+ee3DwQyVc9q/E/K2e1+oie0+X5/6RY586Ha+8rWa1x2PRGZZpnVmrQb4BzRIuQmhZAFIYQUMbGY0IbcS2y2wfWKFhXLL64LH8vZa94TO9ydCa13IQqHOse0IjmH4RkW3AqxF+47YsREad3S+C0YGsGitGBXHUzRC4xAMLoQgxDmpcL23S06qmMJQKbL/b8iCPE5NFFRTFhhM794tOKtiAkOFWeqXhGLhX7y8UOPs+rKDp6SA3Am4Z9M9PUm2X0xguzLUi6J7u5RQOSwfbFIYPtsENPgAtPf2iRXjL9iiJIYW6hePotbFywu1fPEtXLynZCr6K+rwwVigyN5zsuj0fHm5eixaZmtUKAkqBJVLAqvsCMZtR1xS43fTWeZ3FV4xhTDW8mZGZFoTd7Pdr5PqjHsxku0K9fNRuJ0vd2SIxvNbKCznt3DPWSS73N46n8ywln+o2G68t+vnzHHH6dDnHsWOnd5No0yN5qOOzzw+6qg4vueGgfQ9DU1kNhuCWWLn202+BnaeO1dDgWKgOzttsyqlinVd+FNuKxTMFijapCyyO0pWpJ2SYJsFqBO0E6w+BI0XAj0LDJ35ZCl02otaVIYW6ufjfLfCciF5fgvnWyRNrE95r8BwqEPlXjHse2iQ+ZYZNl1EhJIYGr/elOHYhsrX2wi/auPJdx47YyCIQqH8KuBSu+DwiKLW+Uph/0aT/z8AAAD//52BpFEAAAAGSURBVAMA47gKlcNvpVEAAAAASUVORK5CYII=" alt="CPPEM"></div>
+      <div class="logo-texto">CPPEM Notícias</div>
+    </div>
+    <nav class="menu" id="menuPrincipal">
+      <a onclick="irPara('inicio')" id="nav-inicio" class="ativo">Início</a>
+    </nav>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <button class="btn-cta btn-dicas" onclick="abrirDashboard()">Dicas de Estudos</button>
+      <button class="btn-cta hide-mobile">Estude com o CPPEM</button>
+      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<!-- =================== PAGE: INÍCIO =================== -->
+<div class="page ativa" id="page-inicio">
+  <section class="inicio-hero">
+    <div class="wrap">
+      <span class="inicio-tag">Concursos &amp; Carreiras Policiais</span>
+      <h1>Acompanhe os concursos<br>e se prepare antes do edital</h1>
+      <p>Análises estratégicas e informações atualizadas para quem estuda para carreiras policiais em Pernambuco e no Brasil.</p>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <div class="noticias-grid">
+
+      <!-- Card 1 -->
+      <div class="noticia-card" onclick="irPara('concursos-pe')">
+        <div class="card-visual">
+          <svg viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+            <defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#00FF01" stop-opacity="0.4"/><stop offset="100%" stop-color="#00FF01" stop-opacity="0"/></linearGradient></defs>
+            <circle cx="420" cy="40" r="130" fill="url(#g1)"/>
+            <line x1="0" y1="50" x2="500" y2="50" stroke="#fff" stroke-opacity="0.06"/>
+            <line x1="0" y1="110" x2="500" y2="110" stroke="#fff" stroke-opacity="0.06"/>
+            <line x1="0" y1="170" x2="500" y2="170" stroke="#fff" stroke-opacity="0.06"/>
+            <path d="M0,180 L100,120 L200,145 L320,70 L420,100 L500,30" stroke="#00FF01" stroke-width="2" fill="none" stroke-opacity="0.5"/>
+          </svg>
+          <span class="card-categoria">Concursos em Pernambuco</span>
+        </div>
+        <div class="card-corpo">
+          <h3>Concursos em Pernambuco devem começar a andar: entenda os fatores que pressionam o avanço dos novos certames</h3>
+          <p>Encerramento de cursos de formação, ano eleitoral, aposentadorias e evasão de servidores formam um cenário favorável para novos anúncios.</p>
+          <div class="card-meta">
+            <span>CPPEM Notícias · 4 min</span>
+            <span class="card-ler">Ler matéria <span>›</span></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="noticia-card" onclick="irPara('pprn')">
+        <div class="card-visual" style="background:linear-gradient(120deg,#1a0a00,#3d1f0a);">
+          <svg viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+            <defs><linearGradient id="g2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#00FF01" stop-opacity="0.35"/><stop offset="100%" stop-color="#00FF01" stop-opacity="0"/></linearGradient></defs>
+            <circle cx="380" cy="50" r="120" fill="url(#g2)"/>
+            <rect x="60" y="40" width="8" height="120" rx="2" fill="#00FF01" fill-opacity="0.3"/>
+            <rect x="90" y="70" width="8" height="90" rx="2" fill="#00FF01" fill-opacity="0.25"/>
+            <rect x="120" y="30" width="8" height="130" rx="2" fill="#00FF01" fill-opacity="0.35"/>
+            <rect x="150" y="80" width="8" height="80" rx="2" fill="#00FF01" fill-opacity="0.2"/>
+          </svg>
+          <span class="card-categoria" style="color:var(--cor-destaque);">Concurso Aberto</span>
+        </div>
+        <div class="card-corpo">
+          <h3>Ainda dá tempo de estudar para a PPRN?</h3>
+          <p>Com 74 dias para a prova, entenda a estratégia certa para disputar uma das 140 vagas diretas ou as mais de 900 reservadas nas fases seguintes.</p>
+          <div class="card-meta">
+            <span>CPPEM Notícias · 5 min</span>
+            <span class="card-ler">Ler matéria <span>›</span></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3 — GCM Tamandaré -->
+      <div class="noticia-card" onclick="irPara('gcm-tamandare')">
+        <div class="card-visual" style="background:linear-gradient(120deg,#1a1000,#3d2a00);">
+          <svg viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+            <defs><linearGradient id="g3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#00FF01" stop-opacity="0.3"/><stop offset="100%" stop-color="#00FF01" stop-opacity="0"/></linearGradient></defs>
+            <circle cx="380" cy="50" r="130" fill="url(#g3)"/>
+            <line x1="0" y1="60" x2="500" y2="60" stroke="#fff" stroke-opacity="0.05"/>
+            <line x1="0" y1="120" x2="500" y2="120" stroke="#fff" stroke-opacity="0.05"/>
+            <text x="250" y="90" text-anchor="middle" dominant-baseline="central" fill="#00FF01" fill-opacity="0.15" font-size="64" font-weight="900" font-family="system-ui,sans-serif">GCM</text>
+            <text x="250" y="148" text-anchor="middle" dominant-baseline="central" fill="#00FF01" fill-opacity="0.12" font-size="22" font-family="system-ui,sans-serif">Tamandaré · PE</text>
+          </svg>
+          <span class="card-categoria">Edital Publicado</span>
+        </div>
+        <div class="card-corpo">
+          <h3>GCM Tamandaré-PE: edital publicado com 30 vagas — veja salário, matérias e TAF</h3>
+          <p>Prova em 29/11/2026. Legislação em Segurança Pública e Extravagante valem juntas 52,8 pontos. Sem limite de idade ou altura mínima.</p>
+          <div class="card-meta">
+            <span>CPPEM Notícias · 5 min</span>
+            <span class="card-ler">Ler matéria <span>›</span></span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- =================== PAGE: CONCURSOS PE =================== -->
+<div class="page" id="page-concursos-pe">
+
+  <section class="hero-materia">
+    <div class="wrap">
+      <div class="breadcrumb" onclick="irPara('inicio')">← Voltar para <span>Início</span></div>
+      <span class="categoria-tag">Concursos em Pernambuco</span>
+      <h1 class="titulo-materia">Concursos em Pernambuco devem começar a andar: entenda os fatores que pressionam o avanço dos novos certames</h1>
+      <p class="subtitulo">Encerramento de cursos de formação, ano eleitoral, aposentadorias e evasão de servidores formam um cenário favorável para novos anúncios.</p>
+      <div class="meta-materia">
+        <span>Por <strong>CPPEM Notícias</strong></span>
+        <span>Atualizado em <strong id="data-materia-1"></strong></span>
+        <span>Tempo de leitura: <strong>4 minutos</strong></span>
+      </div>
+
+      <div class="destaque-visual">
+        <svg viewBox="0 0 800 280" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <defs><linearGradient id="gradL1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#00FF01" stop-opacity="0.45"/><stop offset="100%" stop-color="#00FF01" stop-opacity="0"/></linearGradient></defs>
+          <circle cx="660" cy="60" r="150" fill="url(#gradL1)"/>
+          <line x1="0" y1="40" x2="800" y2="40" stroke="#fff" stroke-opacity="0.06"/>
+          <line x1="0" y1="110" x2="800" y2="110" stroke="#fff" stroke-opacity="0.06"/>
+          <line x1="0" y1="190" x2="800" y2="190" stroke="#fff" stroke-opacity="0.06"/>
+          <path d="M0,280 L120,170 L260,210 L420,110 L560,160 L800,40" stroke="#00FF01" stroke-width="2" fill="none" stroke-opacity="0.5"/>
+          <circle cx="420" cy="110" r="5" fill="#00FF01"/>
+        </svg>
+        <div class="destaque-conteudo">
+          <div class="selo"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00FF01" stroke-width="2"><path d="M12 2L20 6V12C20 17 16.5 20.5 12 22C7.5 20.5 4 17 4 12V6Z"/><path d="M9 12L11 14L15 9" stroke-linecap="round"/></svg></div>
+          <span class="linha"></span>
+          <p>Cenário aponta para possível retomada de novos concursos no Estado.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap layout-principal">
+    <article class="corpo-materia fade-up">
+      <p class="lead">Os concursos em Pernambuco devem começar a andar agora devido a uma combinação de fatores estratégicos, políticos e de necessidade urgente de efetivo.</p>
+
+      <h2 class="secao-titulo">Encerramento dos Cursos de Formação anteriores</h2>
+      <p>As fases de todos os concursos que estavam em andamento foram concluídas. Recentemente, ocorreu a formatura da segunda turma da Polícia Civil (PCPE) e dos aspirantes a bombeiros, o que indica que não há mais turmas em curso de formação no momento. Com a finalização dessas etapas, as portas estão abertas para o andamento de novos certames.</p>
+
+      <h2 class="secao-titulo">Ano eleitoral e estratégia política</h2>
+      <p>Como este é um ano eleitoral, a expectativa é que os meses de julho, agosto e setembro sejam decisivos. A governadora tem reforçado publicamente e em suas redes sociais o compromisso de realizar novos concursos. Há uma necessidade estratégica de que esses certames sejam ao menos autorizados em breve, para que a promessa de aumento de efetivo e a realização de novos concursos possam ser usadas nas campanhas eleitorais.</p>
+
+      <h2 class="secao-titulo">Onda de aposentadorias</h2>
+      <p>Existe um volume muito grande de servidores prestes a sair do serviço público, com um pico esperado para os anos de 2028 e 2029. Apenas na Polícia Militar (PMPE), as turmas de 1992 e 1993 possuem cerca de 1.000 pessoas aguardando apenas a promoção para poderem se aposentar.</p>
+
+      <h2 class="secao-titulo">Alta evasão de servidores</h2>
+      <p>Apesar de o concurso recente da PMPE ter sido grande, com a entrada de mais de 4.300 pessoas, esse quadro é rapidamente enxugado porque muitos aprovados são de fora e acabam retornando para seus estados ao passarem em outros concursos locais. Isso reforça a intenção do governo de manter novos reforços e concursos grandes ao longo de ciclos de quatro anos. Um exemplo recente foi a saída de servidores da PMPE para assumirem cargos na Polícia Civil e na Polícia Penal do Ceará — e essa rotatividade é exatamente o que faz as vagas surgirem.</p>
+
+      <h2 class="secao-titulo">A grande aposta: Perito Papeloscopista</h2>
+      <div class="bloco-destaque-cargo">
+        <div class="cargo-conteudo">
+          <span class="cargo-badge">Cargo Prioritário</span>
+          <p>O cargo com a situação mais urgente, e que é a principal aposta para os próximos certames, é o de <strong>Perito Papeloscopista</strong>.</p>
+          <div class="cargo-numeros">
+            <div class="cargo-num-item"><span class="cargo-num">700</span><span class="cargo-num-label">cargos efetivos previstos</span></div>
+            <div class="cargo-num-item destaque-num"><span class="cargo-num">278</span><span class="cargo-num-label">atualmente ocupados</span></div>
+            <div class="cargo-num-item alerta-num"><span class="cargo-num">~70</span><span class="cargo-num-label">peritos atendendo todo o interior</span></div>
+          </div>
+          <p>O último concurso ocorreu em <strong>2016</strong>. A expectativa é que as novas vagas venham integradas ao próximo edital da Polícia Civil (PCPE), oferecendo no mínimo <strong>200 vagas imediatas</strong>.</p>
+        </div>
+      </div>
+
+      <h2 class="secao-titulo">Previsões para outras corporações</h2>
+      <div class="tabela-corporacoes">
+        <div class="corp-item">
+          <div class="corp-header"><span class="corp-sigla">PCPE</span><span class="corp-nome">Polícia Civil</span></div>
+          <p>Além dos peritos, a corporação possui um déficit muito grande na área de investigação. Há também a expectativa de que venham vagas para o cargo de Delegado.</p>
+        </div>
+        <div class="corp-item">
+          <div class="corp-header"><span class="corp-sigla">PMPE / CBM</span><span class="corp-nome">PM e Bombeiros</span></div>
+          <p>Além de novos soldados, a expectativa é de que haja concurso para oficiais em ambas as instituições — com número estimado entre <strong>30 e 60 vagas para cada</strong>.</p>
+        </div>
+        <div class="corp-item corp-incerto">
+          <div class="corp-header"><span class="corp-sigla">PC</span><span class="corp-nome">Polícia Científica</span></div>
+          <p>O panorama é o <strong>mais incerto no momento</strong>. Ainda há dúvidas em relação à segunda turma (T2) do concurso anterior e se eles farão ou não o curso de formação.</p>
+        </div>
+      </div>
+
+      <h2 class="secao-titulo">Estimativa de prazos</h2>
+      <p>Com as formações anteriores concluídas, os próximos meses serão decisivos. A estimativa é de que as autorizações para os concursos ocorram <strong>entre o final de julho e o começo de agosto</strong>. Sendo bastante otimista, existe a possibilidade de que o edital da PMPE seja publicado em setembro.</p>
+
+      <h2 class="secao-titulo">Estratégia para os candidatos</h2>
+      <p>Enquanto as autorizações não saem, a recomendação é não ficar parado esperando e fazer outras provas para ganhar experiência. A sugestão é tentar concursos de cidades e estados vizinhos que estão abertos, como <strong>Cabo de Santo Agostinho, Campina Grande e PM de Alagoas</strong>.</p>
+      <p>Essa rotatividade é normal e é exatamente o que faz as vagas surgirem: muitos aprovados em Pernambuco acabam passando em outros estados e indo embora — a exemplo da recente saída de servidores da PMPE para assumirem cargos na Polícia Civil e na Polícia Penal do Ceará.</p>
+    </article>
+
+    <aside class="sidebar fade-up">
+      <div class="sidebar-bloco">
+        <h3>Resumo da análise</h3>
+        <ul>
+          <li>Cursos de formação encerrados — portas abertas para novos certames.</li>
+          <li>Perito Papeloscopista: só 278 de 700 cargos ocupados. Último: 2016.</li>
+          <li>Aposentadorias com pico em 2028–2029. ~1.000 aguardam promoção na PMPE.</li>
+          <li>Autorizações esperadas entre final de julho e início de agosto.</li>
+          <li>Edital da PMPE pode sair já em setembro (cenário otimista).</li>
+        </ul>
+      </div>
+      <div class="sidebar-bloco">
+        <h3>O que acompanhar agora</h3>
+        <ul>
+          <li>Autorização oficial dos novos concursos</li>
+          <li>Definição da banca examinadora</li>
+          <li>Publicação de editais (PMPE, PCPE)</li>
+          <li>Situação da T2 da Polícia Científica</li>
+          <li>Vagas para oficiais (PMPE e Bombeiros)</li>
+        </ul>
+      </div>
+      <div class="sidebar-bloco">
+        <h3>Concursos para fazer agora</h3>
+        <ul>
+          <li>PM de Alagoas</li>
+          <li>Cabo de Santo Agostinho</li>
+          <li>Campina Grande</li>
+        </ul>
+      </div>
+      <div class="sidebar-bloco relacionadas">
+        <h3>Matérias relacionadas</h3>
+        <a onclick="irPara('pprn')">Ainda dá tempo de estudar para a PPRN?</a>
+        <a href="#">Como estudar antes do edital?</a>
+        <a href="#">Como montar uma rotina para carreiras policiais?</a>
+      </div>
+    </aside>
+  </div>
+
+  <!-- CARDS FATORES -->
+  <section class="cards-fatores">
+    <div class="wrap">
+      <div class="secao-label fade-up">Panorama</div>
+      <h2 class="secao-grande fade-up">Os cinco fatores em jogo</h2>
+      <div class="grid-cards">
+        <div class="card-fator"><div class="num">01</div><h4>Cursos concluídos</h4><p>Etapas anteriores foram encerradas, abrindo espaço administrativo para novos certames.</p></div>
+        <div class="card-fator"><div class="num">02</div><h4>Ano eleitoral</h4><p>O calendário político aumenta a pressão por anúncios e autorizações entre julho e setembro.</p></div>
+        <div class="card-fator"><div class="num">03</div><h4>Aposentadorias</h4><p>Pico esperado para 2028–2029. Na PMPE, ~1.000 policiais aguardam promoção para se aposentar.</p></div>
+        <div class="card-fator"><div class="num">04</div><h4>Evasão</h4><p>Parte dos novos servidores deixa o Estado ao passar em outros concursos locais.</p></div>
+        <div class="card-fator" style="border-top:3px solid var(--cor-destaque);"><div class="num">★</div><h4>Perito Papeloscopista</h4><p>De 700 cargos previstos, apenas 278 ocupados. Último concurso em 2016. Mín. 200 vagas esperadas.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <section class="timeline">
+    <div class="wrap">
+      <div class="secao-label fade-up">Cronologia</div>
+      <h2 class="secao-grande fade-up">Linha do tempo do ciclo atual</h2>
+      <div class="timeline-lista">
+        <div class="timeline-item"><div class="timeline-marca">1</div><div class="timeline-texto"><h4>Concursos anteriores</h4><p>Fases do certame de segurança pública lançado em 2023, com cursos de formação em andamento.</p></div></div>
+        <div class="timeline-item"><div class="timeline-marca">2</div><div class="timeline-texto"><h4>Formaturas</h4><p>Conclusão das turmas da PCPE (2ª turma) e dos aspirantes a bombeiros. Sem mais turmas em formação no momento.</p></div></div>
+        <div class="timeline-item"><div class="timeline-marca">3</div><div class="timeline-texto"><h4>Cenário atual</h4><p>Espaço aberto para novos certames. Perito Papeloscopista com situação mais crítica: 278 de 700 cargos ocupados.</p></div></div>
+        <div class="timeline-item"><div class="timeline-marca">4</div><div class="timeline-texto"><h4>Final de julho / início de agosto</h4><p>Estimativa para que as autorizações dos novos concursos sejam publicadas — janela eleitoral decisiva.</p></div></div>
+        <div class="timeline-item"><div class="timeline-marca">5</div><div class="timeline-texto"><h4>Setembro (cenário otimista)</h4><p>Possibilidade de publicação do edital da PMPE. PCPE e demais corporações a seguir em sequência.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ANÁLISE -->
+  <section class="analise">
+    <div class="wrap">
+      <div class="caixa-analise fade-up">
+        <div class="selo-analise">Análise CPPEM</div>
+        <p>"O concurseiro não deve esperar o edital para começar. Quando o cenário político e administrativo começa a se movimentar, quem já está estudando sai na frente. A preparação antecipada é o que permite transformar uma possível autorização em oportunidade real de aprovação."</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-final">
+    <div class="wrap">
+      <h2>Quer se preparar antes do edital?</h2>
+      <p>O CPPEM acompanha os principais movimentos dos concursos em Pernambuco e prepara alunos para carreiras policiais e administrativas com foco, estratégia e direcionamento.</p>
+      <div class="cta-botoes">
+        <button class="btn-cta btn-dourado">Conheça os cursos do CPPEM</button>
+        <button class="btn-borda-branco">Fale com nossa equipe</button>
+        <button class="btn-borda-branco">Receba notícias sobre concursos</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- =================== PAGE: PPRN =================== -->
+<div class="page" id="page-pprn">
+
+  <section class="hero-materia">
+    <div class="wrap">
+      <div class="breadcrumb" onclick="irPara('inicio')">← Voltar para <span>Início</span></div>
+      <span class="categoria-tag">Concurso Aberto</span>
+      <h1 class="titulo-materia">Ainda dá tempo de estudar para a PPRN?</h1>
+      <p class="subtitulo">Com 74 dias para a prova, entenda a estratégia certa para disputar uma das vagas sem desperdiçar o tempo que ainda resta.</p>
+      <div class="meta-materia">
+        <span>Por <strong>CPPEM Notícias</strong></span>
+        <span>Atualizado em <strong id="data-materia-2"></strong></span>
+        <span>Tempo de leitura: <strong>5 minutos</strong></span>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap layout-principal">
+    <article class="corpo-materia fade-up">
+      <div class="pprn-alerta">
+        <span class="pprn-contagem">74 dias</span>
+        <span class="pprn-alerta-texto">para a prova · <strong>140 vagas diretas</strong> + <strong>900+ reservadas</strong> (TAF e fases seguintes)</span>
+      </div>
+
+      <p class="lead">Sim, ainda dá tempo — mas isso depende exclusivamente da sua estratégia de estudos. Com 74 dias para a prova, é perfeitamente possível buscar uma classificação, seja entre as 140 vagas diretas de ampla concorrência ou entre as mais de 900 vagas reservadas para as próximas fases, como o teste de aptidão física (TAF).</p>
+
+      <p>Cerca de 95% dos candidatos começam a estudar apenas quando o edital é publicado. Portanto, você não está necessariamente atrás da maioria. Contudo, você não terá sucesso se tentar estudar todo o edital de forma igualitária e linear — cerca de 50% do conteúdo não cairá na prova.</p>
+
+      <h2 class="secao-titulo">A matemática dos pontos</h2>
+      <div class="pprn-pontos-grid">
+        <div class="pprn-ponto destaque-ponto"><span class="pprn-ponto-num">40</span><span class="pprn-ponto-label">pontos</span><span class="pprn-ponto-disc">Legislação Específica</span></div>
+        <div class="pprn-ponto destaque-ponto"><span class="pprn-ponto-num">30</span><span class="pprn-ponto-label">pontos</span><span class="pprn-ponto-disc">Execução Penal</span></div>
+        <div class="pprn-ponto destaque-ponto"><span class="pprn-ponto-num">20</span><span class="pprn-ponto-label">pontos</span><span class="pprn-ponto-disc">Dir. Penal / Proc. Penal</span></div>
+        <div class="pprn-ponto"><span class="pprn-ponto-num">80%+</span><span class="pprn-ponto-label">dos pontos</span><span class="pprn-ponto-disc">concentrados em Direito</span></div>
+      </div>
+      <p class="pprn-obs">O bloco de conhecimentos específicos (Peso 2) vale o dobro e concentra <strong>90 dos 145 pontos da prova</strong>. Ignorar a matemática dos pesos é estudar de forma errada.</p>
+
+      <h2 class="secao-titulo">Estratégia certa para a reta final</h2>
+      <div class="pprn-dicas-lista">
+        <div class="pprn-dica-item"><strong>Foque na "zona de caça" (Peso 2)</strong><p>Legislação Específica, Execução Penal e Direito Penal/Processual Penal primeiro. Direito representa mais de 80% dos pontos possíveis.</p></div>
+        <div class="pprn-dica-item"><strong>Fuja de materiais extensos e videoaulas longas</strong><p>Resumos de reta final, PDFs estruturados, flashcards e videoaulas curtas. Pacotes gigantescos de grandes empresas não caberão no tempo.</p></div>
+        <div class="pprn-dica-item"><strong>Memorize a Lei Seca</strong><p>A banca Avalia tem histórico semelhante ao AOCP: direta, objetiva e cobra a literalidade da lei. Menos doutrina complexa, mais memorização do texto legal.</p></div>
+        <div class="pprn-dica-item"><strong>Priorize questões</strong><p>Leia rapidamente a teoria (foco nos trechos das leis) e passe logo para resolução e validação de questões. Questões são o motor da reta final.</p></div>
+      </div>
+
+      <h2 class="secao-titulo">Conclusão</h2>
+      <p>Se você adotar um estudo focado e estratégico, priorizando as matérias de peso 2 com materiais práticos em vez de perder tempo tentando ler o edital inteiro, ainda é possível disputar uma das vagas.</p>
+    </article>
+
+    <aside class="sidebar fade-up">
+      <div class="plano-card">
+        <span class="plano-badge">PLANO DE COMBATE</span>
+        <h3>Mentoria estratégica para a PPRN</h3>
+        <p class="desc">Criado para quem quer disputar uma vaga com foco total, sem perder tempo com o que não cai na prova.</p>
+        <ul>
+          <li><span class="plano-check">✓</span> Foco nas matérias de Peso 2 desde o primeiro dia</li>
+          <li><span class="plano-check">✓</span> Materiais diretos ao ponto — sem enrolação</li>
+          <li><span class="plano-check">✓</span> Cronograma para os 74 dias restantes</li>
+          <li><span class="plano-check">✓</span> Banco de questões comentadas</li>
+          <li><span class="plano-check">✓</span> Mentoria próxima — sem deixar dúvida parada</li>
+          <li><span class="plano-check">✓</span> Estratégia de Lei Seca com método de memorização</li>
+        </ul>
+        <div class="plano-cta-box">
+          <p style="font-size:0.8rem;color:#9acf9a;margin-bottom:10px;font-style:italic;">Quem começa agora com estratégia ainda tem tempo real de aprovação.</p>
+          <button class="plano-btn1">Quero o Plano de Combate</button>
+          <button class="plano-btn2">Falar com um especialista</button>
+        </div>
+      </div>
+      <div class="sidebar-bloco relacionadas">
+        <h3>Matérias relacionadas</h3>
+        <a onclick="irPara('concursos-pe')">Concursos em PE devem começar a andar</a>
+        <a href="#">Como montar uma rotina para carreiras policiais?</a>
+      </div>
+    </aside>
+  </div>
+
+  <section class="cta-final">
+    <div class="wrap">
+      <h2>Prepare-se com quem conhece os concursos</h2>
+      <p>O CPPEM acompanha os movimentos dos certames e prepara alunos com foco, estratégia e direcionamento para carreiras policiais.</p>
+      <div class="cta-botoes">
+        <button class="btn-cta btn-dourado">Quero o Plano de Combate PPRN</button>
+        <button class="btn-borda-branco">Falar com nossa equipe</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+
+<!-- =================== PAGE: GCM TAMANDARÉ =================== -->
+<div class="page" id="page-gcm-tamandare">
+
+  <section class="hero-materia">
+    <div class="wrap">
+      <div class="breadcrumb" onclick="irPara('inicio')">← Voltar para <span>Início</span></div>
+      <span class="categoria-tag">Edital Publicado · 10/08/2026</span>
+      <h1 class="titulo-materia">GCM Tamandaré-PE: edital publicado com 30 vagas — veja salário, matérias de peso, TAF e análise completa</h1>
+      <p class="subtitulo">Banca IGEDUC · Prova em 29/11/2026 · Nível médio · Sem limite de idade ou altura mínima. Legislação concentra 68% dos pontos.</p>
+      <div class="meta-materia">
+        <span>Por <strong>CPPEM Notícias</strong></span>
+        <span>Publicado em <strong id="data-materia-gcm"></strong></span>
+        <span>Tempo de leitura: <strong>5 minutos</strong></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOTALIZADORES RÁPIDOS -->
+  <div class="wrap" style="padding-top:32px;padding-bottom:0;">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin-bottom:36px;">
+      <div style="background:linear-gradient(135deg,#041604,#0a3d0a);border:1px solid var(--cor-destaque);border-radius:8px;padding:18px 14px;text-align:center;">
+        <span style="display:block;font-size:2rem;font-weight:900;color:var(--cor-destaque);line-height:1;">30</span>
+        <span style="display:block;font-size:0.72rem;color:#9acf9a;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-top:4px;">vagas totais</span>
+        <span style="display:block;font-size:0.68rem;color:#7ab87a;margin-top:2px;">28 AC + 2 PCD</span>
+      </div>
+      <div style="background:#fff;border:1px solid var(--cor-borda);border-radius:8px;padding:18px 14px;text-align:center;">
+        <span style="display:block;font-size:2rem;font-weight:900;color:var(--cor-principal);line-height:1;">R$1.800</span>
+        <span style="display:block;font-size:0.72rem;color:var(--cor-texto-suave);font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-top:4px;">salário base</span>
+        <span style="display:block;font-size:0.68rem;color:var(--cor-texto-suave);margin-top:2px;">pode chegar a R$3.000+</span>
+      </div>
+      <div style="background:#fff;border:1px solid var(--cor-borda);border-radius:8px;padding:18px 14px;text-align:center;">
+        <span style="display:block;font-size:2rem;font-weight:900;color:var(--cor-principal);line-height:1;">60</span>
+        <span style="display:block;font-size:0.72rem;color:var(--cor-texto-suave);font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-top:4px;">questões · 5h</span>
+        <span style="display:block;font-size:0.68rem;color:var(--cor-texto-suave);margin-top:2px;">mínimo 70 pontos</span>
+      </div>
+      <div style="background:#fffbe6;border:1px solid #e6c84b;border-radius:8px;padding:18px 14px;text-align:center;">
+        <span style="display:block;font-size:2rem;font-weight:900;color:#7a5f00;line-height:1;">29/11</span>
+        <span style="display:block;font-size:0.72rem;color:#9a7a00;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-top:4px;">data da prova</span>
+        <span style="display:block;font-size:0.68rem;color:#7a6500;margin-top:2px;">Inscrições até 24/09</span>
+      </div>
+      <div style="background:#fff;border:1px solid var(--cor-borda);border-radius:8px;padding:18px 14px;text-align:center;">
+        <span style="display:block;font-size:2rem;font-weight:900;color:var(--cor-principal);line-height:1;">R$150</span>
+        <span style="display:block;font-size:0.72rem;color:var(--cor-texto-suave);font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-top:4px;">taxa inscrição</span>
+        <span style="display:block;font-size:0.68rem;color:var(--cor-texto-suave);margin-top:2px;">Isenção: 10-12/08</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap layout-principal">
+    <article class="corpo-materia fade-up">
+
+      <h2 class="secao-titulo">Visão geral do concurso</h2>
+      <p class="lead">A Prefeitura de Tamandaré-PE publicou o Edital 001/2026 nesta segunda-feira (10/08), abrindo 30 vagas para Guarda Civil Municipal. O cargo exige apenas nível médio, não tem limite de idade máxima nem altura mínima exigida — dois pontos que ampliam bastante o leque de candidatos.</p>
+      <p>As inscrições ficam abertas até 24 de setembro de 2026, com taxa de R$150. Pedidos de isenção somente nos dias 10, 11 e 12 de agosto. A prova objetiva está marcada para <strong>29 de novembro de 2026</strong>, organizada pela banca <strong>IGEDUC</strong>.</p>
+
+      <h2 class="secao-titulo">Salário e gratificações</h2>
+      <p>O vencimento base está fixado em <strong>R$ 1.800,00</strong> pela Lei Municipal nº 763. Sobre esse valor incidem gratificações que podem elevar significativamente a remuneração real:</p>
+      <div class="tabela-corporacoes">
+        <div class="corp-item">
+          <div class="corp-header"><span class="corp-sigla">BASE</span><span class="corp-nome">Vencimento fixado em lei</span></div>
+          <p>R$ 1.800,00 — estabelecido pela Lei Municipal nº 763 como referência para cálculo das vantagens.</p>
+        </div>
+        <div class="corp-item">
+          <div class="corp-header"><span class="corp-sigla">+</span><span class="corp-nome">Adicional de Risco de Vida / Periculosidade</span></div>
+          <p>Principal incremento financeiro para a função, pago em razão da exposição a situações de risco no dia a dia da segurança pública.</p>
+        </div>
+        <div class="corp-item">
+          <div class="corp-header"><span class="corp-sigla">+</span><span class="corp-nome">Adicionais de plantão e escala noturna</span></div>
+          <p>Decorrentes da atuação em turnos diurnos e noturnos. A remuneração real estimada pode <strong>ultrapassar R$ 2.400 e chegar a mais de R$ 3.000</strong> dependendo da escala.</p>
+        </div>
+      </div>
+
+      <h2 class="secao-titulo">Matérias de maior peso — onde estão 68% dos pontos</h2>
+      <p>A prova tem 60 questões valendo 100 pontos. As três disciplinas com <strong>peso 2,2</strong> concentram sozinhas <strong>68,2 pontos</strong> dos 100 possíveis. Ignorar essa matemática é o erro mais comum dos candidatos.</p>
+
+      <!-- GRID DE PONTOS -->
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:18px 0 24px;">
+        <div style="background:linear-gradient(135deg,#041604,#0a3d0a);border:1px solid var(--cor-destaque);border-radius:8px;padding:16px 14px;text-align:center;">
+          <span style="display:block;font-size:1.7rem;font-weight:900;color:var(--cor-destaque);line-height:1;">26,4</span>
+          <span style="display:block;font-size:0.68rem;color:#9acf9a;font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin:4px 0 3px;">pontos · 12 questões</span>
+          <span style="display:block;font-size:0.78rem;color:#c5e8c5;">Legislação em Segurança Pública</span>
+        </div>
+        <div style="background:linear-gradient(135deg,#041604,#0a3d0a);border:1px solid var(--cor-destaque);border-radius:8px;padding:16px 14px;text-align:center;">
+          <span style="display:block;font-size:1.7rem;font-weight:900;color:var(--cor-destaque);line-height:1;">26,4</span>
+          <span style="display:block;font-size:0.68rem;color:#9acf9a;font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin:4px 0 3px;">pontos · 12 questões</span>
+          <span style="display:block;font-size:0.78rem;color:#c5e8c5;">Legislação Extravagante</span>
+        </div>
+        <div style="background:linear-gradient(135deg,#041604,#0a3d0a);border:1px solid var(--cor-destaque);border-radius:8px;padding:16px 14px;text-align:center;">
+          <span style="display:block;font-size:1.7rem;font-weight:900;color:var(--cor-destaque);line-height:1;">15,4</span>
+          <span style="display:block;font-size:0.68rem;color:#9acf9a;font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin:4px 0 3px;">pontos · 7 questões</span>
+          <span style="display:block;font-size:0.78rem;color:#c5e8c5;">História e Geog. de Tamandaré</span>
+        </div>
+        <div style="background:var(--cor-fundo);border:1px solid var(--cor-borda);border-radius:8px;padding:16px 14px;text-align:center;">
+          <span style="display:block;font-size:1.7rem;font-weight:900;color:var(--cor-principal);line-height:1;">8,4</span>
+          <span style="display:block;font-size:0.68rem;color:var(--cor-texto-suave);font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin:4px 0 3px;">pontos · 7 questões</span>
+          <span style="display:block;font-size:0.78rem;color:var(--cor-texto-suave);">Código Penal</span>
+        </div>
+        <div style="background:var(--cor-fundo);border:1px solid var(--cor-borda);border-radius:8px;padding:16px 14px;text-align:center;">
+          <span style="display:block;font-size:1.7rem;font-weight:900;color:var(--cor-principal);line-height:1;">8,4</span>
+          <span style="display:block;font-size:0.68rem;color:var(--cor-texto-suave);font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin:4px 0 3px;">pontos · 7 questões</span>
+          <span style="display:block;font-size:0.78rem;color:var(--cor-texto-suave);">Dir. Constitucional</span>
+        </div>
+        <div style="background:var(--cor-fundo);border:1px solid var(--cor-borda);border-radius:8px;padding:16px 14px;text-align:center;">
+          <span style="display:block;font-size:1.7rem;font-weight:900;color:var(--cor-principal);line-height:1;">5,0</span>
+          <span style="display:block;font-size:0.68rem;color:var(--cor-texto-suave);font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin:4px 0 3px;">pontos cada · 5 questões</span>
+          <span style="display:block;font-size:0.78rem;color:var(--cor-texto-suave);">Português · Informática · Lógica</span>
+        </div>
+      </div>
+      <p style="font-size:0.87rem;background:var(--cor-fundo);border:1px solid var(--cor-borda);padding:10px 14px;border-radius:6px;color:var(--cor-texto-suave);margin-bottom:24px;">Regra de eliminação: mínimo de <strong style="color:var(--cor-texto);">70 pontos</strong> na nota global + <strong style="color:var(--cor-texto);">zero em qualquer disciplina = eliminação automática</strong>.</p>
+
+      <h2 class="secao-titulo">O que estudar em cada disciplina de peso</h2>
+      <div class="tabela-corporacoes">
+        <div class="corp-item">
+          <div class="corp-header"><span class="corp-sigla" style="font-size:0.7rem;">LSP</span><span class="corp-nome">Legislação em Segurança Pública — 26,4 pts</span></div>
+          <p>Lei de Crimes Hediondos (8.072/90) · Estatuto do Desarmamento (10.826/03) · Lei de Drogas (11.343/06) · Estatuto Geral das Guardas Municipais (13.022/14) · Lei SUSP (13.675/18).</p>
+        </div>
+        <div class="corp-item">
+          <div class="corp-header"><span class="corp-sigla" style="font-size:0.7rem;">LEX</span><span class="corp-nome">Legislação Extravagante — 26,4 pts</span></div>
+          <p>Lei de Racismo (7.716/89) · ECA — apenas Título VII: Crimes (8.069/90) · Lei de Tortura (9.455/97) · Lei Maria da Penha (11.340/06) · Abuso de Autoridade (13.869/19).</p>
+        </div>
+        <div class="corp-item corp-incerto">
+          <div class="corp-header"><span class="corp-sigla" style="background:#6b5010;color:#f0cf6e;font-size:0.7rem;">HGM</span><span class="corp-nome">História e Geografia de Tamandaré — 15,4 pts</span></div>
+          <p>Formação histórica, colonização portuguesa, emancipação · Aspectos geográficos, clima, hidrografia · Forte de Santo Inácio de Loyola · APA Costa dos Corais · Turismo, pesca, festas tradicionais e economia local.</p>
+        </div>
+      </div>
+
+      <h2 class="secao-titulo">TAF — Teste de Aptidão Física</h2>
+      <p>O TAF é <strong>eliminatório</strong> e ocorre nos dias 30 e 31 de janeiro de 2027. Sem corrida tradicional de 2.000m ou 2.400m — os testes são barra fixa, abdominal, flexão de braço e Shuttle Run (corrida de ir e vir em percurso de 9,14m).</p>
+
+      <!-- TABELA TAF -->
+      <div style="overflow-x:auto;margin:16px 0 24px;">
+        <table style="width:100%;border-collapse:collapse;font-size:0.88rem;">
+          <thead>
+            <tr style="background:var(--cor-principal);color:#fff;">
+              <th style="padding:10px 12px;text-align:left;border-radius:6px 0 0 0;">Teste</th>
+              <th style="padding:10px 12px;text-align:center;">Masc. AC</th>
+              <th style="padding:10px 12px;text-align:center;">Masc. PCD</th>
+              <th style="padding:10px 12px;text-align:center;">Fem. AC</th>
+              <th style="padding:10px 12px;text-align:center;border-radius:0 6px 0 0;">Fem. PCD</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="background:#fff;">
+              <td style="padding:10px 12px;border-bottom:1px solid var(--cor-borda);font-weight:600;">Barra Fixa</td>
+              <td style="padding:10px 12px;border-bottom:1px solid var(--cor-borda);text-align:center;">4 rep. dinâm. (1 min)</td>
+              <td style="padding:10px 12px;border-bottom:1px solid var(--cor-borda);text-align:center;">3 rep. dinâm. (1 min)</td>
+              <td style="padding:10px 12px;border-bottom:1px solid var(--cor-borda);text-align:center;">15s estática</td>
+              <td style="padding:10px 12px;border-bottom:1px solid var(--cor-borda);text-align:center;">10s estática</td>
+            </tr>
+            <tr style="background:var(--cor-fundo);">
+              <td style="padding:10px 12px;border-bottom:1px solid var(--cor-borda);font-weight:600;">Abdominal</td>
+              <td style="padding:10px 12px;border-bottom:1px solid var(--cor-borda);text-align:center;">30 rep. (1 min)</td>
+              <td style="padding:10px 12px;border-bottom:1px solid var(--cor-borda);text-align:center;">25 rep. (1 min)</td>
+              <td style="padding:10px 12px;border-bottom:1px solid var(--cor-borda);text-align:center;">25 rep. (1 min)</td>
+              <td style="padding:10px 12px;border-bottom:1px solid var(--cor-borda);text-align:center;">20 rep. (1 min)</td>
+            </tr>
+            <tr style="background:#fff;">
+              <td style="padding:10px 12px;border-bottom:1px solid var(--cor-borda);font-weight:600;">Flexão de braço</td>
+              <td style="padding:10px 12px;border-bottom:1px solid var(--cor-borda);text-align:center;">20 rep. (1 min)</td>
+              <td style="padding:10px 12px;border-bottom:1px solid var(--cor-borda);text-align:center;">18 rep. (1 min)</td>
+              <td style="padding:10px 12px;border-bottom:1px solid var(--cor-borda);text-align:center;">15 rep. (1 min)</td>
+              <td style="padding:10px 12px;border-bottom:1px solid var(--cor-borda);text-align:center;">13 rep. (1 min)</td>
+            </tr>
+            <tr style="background:var(--cor-fundo);">
+              <td style="padding:10px 12px;font-weight:600;">Shuttle Run</td>
+              <td style="padding:10px 12px;text-align:center;">até 18s</td>
+              <td style="padding:10px 12px;text-align:center;">até 20s</td>
+              <td style="padding:10px 12px;text-align:center;">até 22s</td>
+              <td style="padding:10px 12px;text-align:center;">até 24s</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size:0.85rem;color:var(--cor-texto-suave);">Shuttle Run: 4 percursos de ida e volta de 9,14m transportando blocos de madeira. Todos os testes são filmados e fotografados. Exige atestado médico emitido nos 30 dias anteriores ao TAF.</p>
+
+      <h2 class="secao-titulo">Cronograma completo</h2>
+      <div class="tabela-corporacoes">
+        <div class="corp-item"><div class="corp-header"><span class="corp-sigla">1</span><span class="corp-nome">Inscrições</span></div><p>10/08/2026 a 24/09/2026 · Isenção de taxa: 10 a 12/08/2026</p></div>
+        <div class="corp-item"><div class="corp-header"><span class="corp-sigla">2</span><span class="corp-nome">Prova Objetiva</span></div><p><strong>29/11/2026</strong> — 60 questões · 5 horas · múltipla escolha (5 alternativas)</p></div>
+        <div class="corp-item"><div class="corp-header"><span class="corp-sigla">3</span><span class="corp-nome">TAF</span></div><p>30 e 31/01/2027 — apenas os 100 melhores classificados (80 AC + 20 PCD)</p></div>
+        <div class="corp-item"><div class="corp-header"><span class="corp-sigla">4</span><span class="corp-nome">Avaliação Psicológica</span></div><p>Fevereiro de 2027</p></div>
+        <div class="corp-item"><div class="corp-header"><span class="corp-sigla">5</span><span class="corp-nome">Curso de Formação</span></div><p>Março a maio de 2027 · 200 horas · sem remuneração durante a formação</p></div>
+        <div class="corp-item"><div class="corp-header"><span class="corp-sigla">6</span><span class="corp-nome">Resultado Final</span></div><p>12/05/2027</p></div>
+      </div>
+
+      <h2 class="secao-titulo">Prós e contras</h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:8px;">
+        <div style="background:#eafdea;border:1px solid #9ef09e;border-radius:8px;padding:18px 16px;">
+          <p style="font-weight:700;color:var(--cor-principal);margin-bottom:10px;font-size:0.95rem;">Vantagens</p>
+          <ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:7px;">
+            <li style="font-size:0.87rem;color:#1a4a1a;display:flex;gap:7px;"><span style="color:var(--cor-destaque);font-weight:900;">+</span>Sem limite de idade máxima</li>
+            <li style="font-size:0.87rem;color:#1a4a1a;display:flex;gap:7px;"><span style="color:var(--cor-destaque);font-weight:900;">+</span>Sem exigência de altura mínima ou CNH</li>
+            <li style="font-size:0.87rem;color:#1a4a1a;display:flex;gap:7px;"><span style="color:var(--cor-destaque);font-weight:900;">+</span>Nível médio — sem necessidade de curso superior</li>
+            <li style="font-size:0.87rem;color:#1a4a1a;display:flex;gap:7px;"><span style="color:var(--cor-destaque);font-weight:900;">+</span>TAF sem corrida de 2km — apenas 4 testes objetivos</li>
+            <li style="font-size:0.87rem;color:#1a4a1a;display:flex;gap:7px;"><span style="color:var(--cor-destaque);font-weight:900;">+</span>Cargo efetivo com estabilidade</li>
+            <li style="font-size:0.87rem;color:#1a4a1a;display:flex;gap:7px;"><span style="color:var(--cor-destaque);font-weight:900;">+</span>Banca IGEDUC com perfil previsível de cobrança</li>
+          </ul>
+        </div>
+        <div style="background:#fef2f2;border:1px solid #fca5a5;border-radius:8px;padding:18px 16px;">
+          <p style="font-weight:700;color:#7f1d1d;margin-bottom:10px;font-size:0.95rem;">Desvantagens</p>
+          <ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:7px;">
+            <li style="font-size:0.87rem;color:#7f1d1d;display:flex;gap:7px;"><span style="font-weight:900;">−</span>Salário base de R$1.800 — depende das gratificações</li>
+            <li style="font-size:0.87rem;color:#7f1d1d;display:flex;gap:7px;"><span style="font-weight:900;">−</span>Apenas 30 vagas — funil pequeno</li>
+            <li style="font-size:0.87rem;color:#7f1d1d;display:flex;gap:7px;"><span style="font-weight:900;">−</span>Taxa de R$150 — acima da média</li>
+            <li style="font-size:0.87rem;color:#7f1d1d;display:flex;gap:7px;"><span style="font-weight:900;">−</span>TAF sem segunda chance — eliminação direta</li>
+            <li style="font-size:0.87rem;color:#7f1d1d;display:flex;gap:7px;"><span style="font-weight:900;">−</span>Curso de formação sem remuneração (200h)</li>
+            <li style="font-size:0.87rem;color:#7f1d1d;display:flex;gap:7px;"><span style="font-weight:900;">−</span>Nota mínima alta: 70% em todas as disciplinas</li>
+          </ul>
+        </div>
+      </div>
+
+    </article>
+
+    <aside class="sidebar fade-up">
+      <div class="sidebar-bloco">
+        <h3>Dados do concurso</h3>
+        <ul>
+          <li><strong>Vagas:</strong> 30 (28 AC + 2 PCD)</li>
+          <li><strong>Banca:</strong> IGEDUC</li>
+          <li><strong>Escolaridade:</strong> Ensino Médio</li>
+          <li><strong>Salário base:</strong> R$ 1.800</li>
+          <li><strong>Carga horária:</strong> 40h semanais</li>
+          <li><strong>Inscrições:</strong> até 24/09/2026</li>
+          <li><strong>Prova:</strong> 29/11/2026</li>
+          <li><strong>Taxa:</strong> R$ 150,00</li>
+        </ul>
+      </div>
+      <div class="sidebar-bloco">
+        <h3>Prioridade de estudos</h3>
+        <ul>
+          <li>Leg. Segurança Pública — 26,4 pts</li>
+          <li>Leg. Extravagante — 26,4 pts</li>
+          <li>Hist. e Geog. Tamandaré — 15,4 pts</li>
+          <li>Código Penal — 8,4 pts</li>
+          <li>Dir. Constitucional — 8,4 pts</li>
+          <li>Português / Info / Lógica — 5 pts cada</li>
+        </ul>
+      </div>
+      <div class="plano-card" style="margin-top:0;">
+        <span class="plano-badge">PLANO DE COMBATE</span>
+        <h3>Prepare-se para a GCM Tamandaré</h3>
+        <p class="desc">Foco nas leis de peso 2,2 com Lei Seca e questões IGEDUC. Cronograma para os dias até 29/11.</p>
+        <ul>
+          <li><span class="plano-check">✓</span> Lei Seca das 10 leis de maior peso</li>
+          <li><span class="plano-check">✓</span> Questões no padrão IGEDUC</li>
+          <li><span class="plano-check">✓</span> Hist. e Geog. Tamandaré em material direto</li>
+          <li><span class="plano-check">✓</span> Mentoria para dúvidas sem fila</li>
+        </ul>
+        <div class="plano-cta-box">
+          <button class="plano-btn1">Quero o Plano de Combate</button>
+          <button class="plano-btn2">Falar com especialista</button>
+        </div>
+      </div>
+      <div class="sidebar-bloco relacionadas">
+        <h3>Matérias relacionadas</h3>
+        <a onclick="irPara('concursos-pe')">Concursos em PE devem começar a andar</a>
+        <a onclick="irPara('pprn')">Ainda dá tempo para a PPRN?</a>
+      </div>
+    </aside>
+  </div>
+
+  <section class="cta-final">
+    <div class="wrap">
+      <h2>Prova em 29/11 — o tempo está correndo</h2>
+      <p>Quem começar agora com foco nas leis de maior peso tem tempo real de aprovação na GCM de Tamandaré. O CPPEM prepara você com estratégia e mentoria próxima.</p>
+      <div class="cta-botoes">
+        <button class="btn-cta btn-dourado">Quero o Plano de Combate</button>
+        <button class="btn-borda-branco">Falar com nossa equipe</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+
+
+<!-- RODAPÉ -->
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div><h5>CPPEM Notícias</h5><p>Portal de análises estratégicas sobre concursos públicos, com foco em carreiras policiais em Pernambuco e no Brasil.</p></div>
+      <div><h5>Navegação</h5><ul><li><a href="#">Sobre</a></li><li><a href="#">Cursos</a></li><li><a href="#">Contato</a></li></ul></div>
+      <div><h5>Categorias</h5><ul><li><a href="#">Segurança Pública</a></li><li><a href="#">Pernambuco</a></li><li><a href="#">Análises</a></li></ul></div>
+    </div>
+    <p class="footer-aviso">Conteúdo informativo. Acompanhe sempre os canais oficiais dos órgãos públicos. © CPPEM Colégio e Curso.</p>
+  </div>
+</footer>
+
+<!-- DASHBOARD DICAS DE ESTUDOS -->
+<div id="dashboardOverlay" onclick="fecharDashboard()"></div>
+<div id="dashboardPanel">
+  <div class="dash-header">
+    <div class="dash-header-texto"><h2>Dicas de Estudos</h2><p>Estratégias para carreiras policiais</p></div>
+    <button class="dash-close" onclick="fecharDashboard()">✕</button>
+  </div>
+  <div class="dash-tabs">
+    <button class="dash-tab ativo" onclick="trocarTab('geral',this)">Dicas Gerais</button>
+    <button class="dash-tab" onclick="trocarTab('pprn-dash',this)">PPRN — Reta Final</button>
+    <button class="dash-tab" onclick="trocarTab('plano-dash',this)">Plano de Combate</button>
+  </div>
+  <div class="dash-conteudo">
+    <!-- Tab Geral -->
+    <div class="dash-pane ativo" id="tab-geral">
+      <p style="font-size:0.93rem;color:var(--cor-texto-suave);margin-bottom:18px;">Princípios que o CPPEM aplica na preparação dos alunos para qualquer concurso policial.</p>
+      <div class="dash-dica-item"><span class="dash-dica-num">01</span><strong>Estude antes do edital</strong><p>As matérias são previsíveis. Direito Penal, Processual Penal, Constitucional e Legislação Específica aparecem em praticamente todos os editais.</p></div>
+      <div class="dash-dica-item"><span class="dash-dica-num">02</span><strong>Entenda a matemática dos pontos</strong><p>Nem toda matéria vale igual. Identifique os pesos e monte uma grade proporcional. Estudar tudo de forma linear é erro clássico.</p></div>
+      <div class="dash-dica-item"><span class="dash-dica-num">03</span><strong>Lei Seca é prioridade</strong><p>A maioria das bancas de segurança cobra literalidade. Use flashcards, repetição espaçada e questões diretas.</p></div>
+      <div class="dash-dica-item"><span class="dash-dica-num">04</span><strong>Questões acima de tudo</strong><p>Ciclo correto: teoria objetiva → questões → revisão dos erros → mais questões. Questões antigas da banca são o melhor mapa do que vai cair.</p></div>
+      <div class="dash-dica-item"><span class="dash-dica-num">05</span><strong>Prepare o físico também</strong><p>O TAF elimina candidatos aprovados na prova escrita. Corrida, abdominal e resistência devem estar no cronograma desde o início.</p></div>
+      <div class="dash-dica-item"><span class="dash-dica-num">06</span><strong>Use concursos abertos como treino</strong><p>Fazer provas reais enquanto o edital não sai é uma das melhores estratégias. Você ganha experiência e ainda pode ser aprovado no caminho.</p></div>
+    </div>
+    <!-- Tab PPRN -->
+    <div class="dash-pane" id="tab-pprn-dash">
+      <div class="dash-alerta"><span class="dash-contagem">74 dias</span><span class="dash-alerta-txt">para a prova · <strong>140 vagas diretas</strong> + <strong>900+ reservadas</strong></span></div>
+      <p style="font-size:0.93rem;color:var(--cor-texto);margin-bottom:14px;line-height:1.7;">Sim, ainda dá tempo — mas isso depende exclusivamente da sua estratégia. Cerca de 95% dos candidatos só começam quando o edital é publicado, então você não está necessariamente atrás da maioria.</p>
+      <p class="dash-subtitulo">A matemática dos pontos</p>
+      <div class="dash-pontos-grid">
+        <div class="dash-ponto dp-verde"><span class="dash-ponto-num">40</span><span class="dash-ponto-label">pontos</span><span class="dash-ponto-disc">Legislação Específica</span></div>
+        <div class="dash-ponto dp-verde"><span class="dash-ponto-num">30</span><span class="dash-ponto-label">pontos</span><span class="dash-ponto-disc">Execução Penal</span></div>
+        <div class="dash-ponto dp-verde"><span class="dash-ponto-num">20</span><span class="dash-ponto-label">pontos</span><span class="dash-ponto-disc">Dir. Penal / Proc. Penal</span></div>
+        <div class="dash-ponto"><span class="dash-ponto-num">80%+</span><span class="dash-ponto-label">dos pontos</span><span class="dash-ponto-disc">concentrados em Direito</span></div>
+      </div>
+      <p class="dash-obs">O bloco de Peso 2 concentra <strong>90 dos 145 pontos da prova</strong>. Ignorar os pesos é estudar de forma errada.</p>
+      <p class="dash-subtitulo">Estratégia para a reta final</p>
+      <div class="dash-dica-item"><strong>Foque na "zona de caça" (Peso 2)</strong><p>Legislação Específica, Execução Penal e Direito Penal/Processual Penal primeiro.</p></div>
+      <div class="dash-dica-item"><strong>Fuja de materiais extensos</strong><p>PDFs diretos, flashcards e videoaulas curtas. Pacotes gigantescos não caberão no tempo disponível.</p></div>
+      <div class="dash-dica-item"><strong>Memorize a Lei Seca</strong><p>A banca Avalia cobra literalidade. Menos doutrina, mais memorização do texto legal.</p></div>
+      <div class="dash-dica-item"><strong>Priorize questões</strong><p>Teoria rápida → questões → revisão dos erros. Questões são o motor da reta final.</p></div>
+    </div>
+    <!-- Tab Plano -->
+    <div class="dash-pane" id="tab-plano-dash">
+      <p style="font-size:0.91rem;color:var(--cor-texto-suave);margin-bottom:4px;line-height:1.65;">Estudo focado e estratégico, priorizando peso 2 com materiais práticos. Ainda é possível disputar uma das vagas.</p>
+      <div class="dash-plano">
+        <span class="dash-plano-badge">PLANO DE COMBATE CPPEM</span>
+        <h3>Mentoria estratégica — PPRN e próximos concursos</h3>
+        <p class="desc">Criado para quem quer disputar uma vaga com foco total, sem perder tempo com o que não cai na prova.</p>
+        <ul>
+          <li><span>✓</span> Foco nas matérias de Peso 2 desde o primeiro dia</li>
+          <li><span>✓</span> Materiais diretos ao ponto — sem enrolação</li>
+          <li><span>✓</span> Cronograma para os 74 dias restantes</li>
+          <li><span>✓</span> Banco de questões comentadas por especialistas</li>
+          <li><span>✓</span> Mentoria próxima — sem deixar dúvida parada</li>
+          <li><span>✓</span> Estratégia de Lei Seca com método de memorização</li>
+        </ul>
+        <div class="dash-plano-btns">
+          <button class="dash-plano-btn1">Quero o Plano de Combate</button>
+          <button class="dash-plano-btn2">Falar com um especialista</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// DATA
+(function(){
+  var hoje = new Date();
+  var fmt = hoje.toLocaleDateString("pt-BR",{day:"2-digit",month:"long",year:"numeric"});
+  document.getElementById("data-topo").textContent = fmt;
+  document.getElementById("data-materia-1").textContent = fmt;
+  document.getElementById("data-materia-2").textContent = fmt;
+  var dm3 = document.getElementById("data-materia-3"); if(dm3) dm3.textContent = fmt;
+  var dmgcm = document.getElementById("data-materia-gcm"); if(dmgcm) dmgcm.textContent = fmt;
+})();
+
+// MENU MOBILE
+document.getElementById("menuToggle").addEventListener("click",function(){
+  document.getElementById("menuPrincipal").classList.toggle("aberto");
+});
+
+// NAVEGAÇÃO POR PÁGINAS
+function irPara(slug){
+  // oculta todas as pages
+  document.querySelectorAll(".page").forEach(function(p){p.classList.remove("ativa");});
+  // mostra a page alvo
+  var alvo = document.getElementById("page-"+slug);
+  if(alvo){ alvo.classList.add("ativa"); }
+  // atualiza nav ativo
+  document.querySelectorAll("nav.menu a").forEach(function(a){a.classList.remove("ativo");});
+  if(slug==="inicio"){ var n = document.getElementById("nav-inicio"); if(n) n.classList.add("ativo"); }
+  // scroll ao topo
+  window.scrollTo({top:0,behavior:"smooth"});
+  // reativa observer para a nova page
+  ativarObserver();
+}
+
+// ANIMAÇÕES
+function ativarObserver(){
+  var alvos = document.querySelectorAll(".page.ativa .fade-up, .page.ativa .card-fator, .page.ativa .timeline-item");
+  if("IntersectionObserver" in window){
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add("visivel"); obs.unobserve(e.target); }
+      });
+    },{threshold:0.12});
+    alvos.forEach(function(el){ if(!el.classList.contains("visivel")) obs.observe(el); });
+  } else {
+    alvos.forEach(function(el){ el.classList.add("visivel"); });
+  }
+}
+ativarObserver();
+
+// DASHBOARD
+function abrirDashboard(){
+  document.getElementById("dashboardOverlay").classList.add("aberto");
+  document.getElementById("dashboardPanel").classList.add("aberto");
+  document.body.style.overflow="hidden";
+}
+function fecharDashboard(){
+  document.getElementById("dashboardOverlay").classList.remove("aberto");
+  document.getElementById("dashboardPanel").classList.remove("aberto");
+  document.body.style.overflow="";
+}
+function trocarTab(id,btn){
+  document.querySelectorAll(".dash-pane").forEach(function(p){p.classList.remove("ativo");});
+  document.querySelectorAll(".dash-tab").forEach(function(t){t.classList.remove("ativo");});
+  document.getElementById("tab-"+id).classList.add("ativo");
+  btn.classList.add("ativo");
+}
+document.addEventListener("keydown",function(e){ if(e.key==="Escape") fecharDashboard(); });
+</script>
+</body>
+</html>
